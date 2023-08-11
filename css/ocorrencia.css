@@ -1,0 +1,64 @@
+body {
+    width: 100%;
+    height: 95vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    margin-left: 20%;
+    position: absolute;
+}
+
+.porradolado {
+    width: 5%;
+    height: 80%;
+    background-color: gray;
+}
+.porraooutrolado {
+    width: 50%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+}
+
+.cu {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.cu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5%;
+    background-color: black;
+}
+
+.voltar {
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+}
+
+.continuar {
+    position: relative;
+    width: 20%;
+    height: 5%;
+    font-size: 12px;
+    position: absolute;
+    left: 40%;
+    top: 80px;
+    background-color: aliceblue;
+    z-index: 1;
+}

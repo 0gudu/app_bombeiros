@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/ocorrencia.css">
+    <title>Ocorrencia</title>
+</head>
+<body>
+    <div class="continuar" id="cc">Começar</div>
+
+<div class="porradolado"></div>
+
+<div class="porraooutrolado">
+    <div class="cu">Identificação</div>
+    <div class="cu">Onde doi</div>
+    <div class="cu">Como</div>
+    <div class="cu">QQ foi feito</div>
+    <div class="cu">Como foi</div>
+</div>
+
+<button class="voltar" onclick="link('menu.html')">voltar</button>
+
+<script src="../jquery.js"></script>
+<script>
+    var bt = 200;
+    var add = 120;
+    
+    $("#cc").on("click", function () {
+        console.log(bt);
+        if (bt !== 680) {
+            $("#cc").text("Continuar");
+            $("#cc").css('top', bt + 'px');
+            bt += add;
+        }
+    });
+
+    
+    function link(x) {
+        window.open(x, "_self")
+    }
+
+    if(bt == "97"){
+            document.getElementById('cc').innerText = "Finalizado";
+            console.log()
+        }
+</script>
+</html>
