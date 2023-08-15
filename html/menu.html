@@ -8,12 +8,17 @@
     <title>Menu</title>
 </head>
 <body>
-    <button onclick="link('ocorrencia.html')">Nova Ocorrencia</button>
-    <button onclick="link('listar.html')">Ver Ocorrencais Anteriores</button>
+    <button id="ocorrencia">Nova Ocorrencia</button>
+    <button id="listar">Listar Ocorrencias</button>
 </body>
+<script src="../jquery.js"></script>
 <script>
-    function link(x){
-        window.open(x, "_self")
-    }
+    $("#ocorrencia").on("click", function () {
+        window.open("ocorrencia.html", "_self");
+    });
+
+    $("#listar").on("click", function () {
+        window.open("ocorrencia.html", "_self");
+    });
 </script>
 </html>

@@ -4,61 +4,21 @@ body {
     overflow-y: hidden;
     overflow-x: hidden;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    margin-left: 20%;
-    position: absolute;
-}
-
-.porradolado {
-    width: 5%;
-    height: 80%;
-    background-color: gray;
-}
-.porraooutrolado {
-    width: 50%;
-    height: 80%;
-    display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    justify-items: center;
-    align-items: center;
-    align-content: center;
+    position: relative;
 }
 
-.cu {
-    width: 100%;
-    height: 10%;
+#pesquisa {
     display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.cu::before {
-    content: "";
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 5%;
-    background-color: black;
-}
-
-.voltar {
-    position: absolute;
-    left: 5%;
-    bottom: 5%;
-}
-
-.continuar {
-    position: relative;
+    top: 100px;
+    right: 60px;
     width: 20%;
-    height: 5%;
-    font-size: 12px;
+}
+
+#voltar {
+    display: flex;
     position: absolute;
-    left: 40%;
-    top: 80px;
-    background-color: aliceblue;
-    z-index: 1;
+    bottom: 10px;
+    width: 12%;
 }
