@@ -1,3 +1,8 @@
+<?php 
+    if (!isset($_POST['penis'])){
+        $penis = 1;
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -32,7 +37,7 @@
     });
     
     function next(){
-        window.open("quests.html","_self");
+        window.open("quests.php","_self");
         $("#pesquisa").css('top', bt);
         $("#pesquisa").text("Continuar");
         bt += add;
@@ -41,7 +46,7 @@
     }
 
     $("#voltar").on("click", function () {
-        window.open("menu.html","_self")
+        window.open("index.html","_self")
     });
 
 
