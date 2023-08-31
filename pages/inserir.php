@@ -6,12 +6,12 @@
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
 
-    $comando = $pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :telefone, :email)");
+    $comando = $pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :email, :telefone)");
     $comando->bindParam(':nome', $nome);
     $comando->bindParam(':senha', $senha);
     $comando->bindParam(':telefone', $telefone);
     $comando->bindParam(':email', $email);
     $resultado = $comando->execute();
-        echo "finalizado";
+   
     
 ?>
