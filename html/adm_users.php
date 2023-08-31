@@ -1,4 +1,5 @@
-<?php include("tests.php"); ?>
+<?php include("tests.php");
+include("conect.php"); ?>
 <?php 
         $cu = $db->checkuser("manoel","123");
         if ($cu == true){
@@ -17,11 +18,11 @@
     <link rel="stylesheet" href="../css/admusers.css">
 </head>
 <body>
-    <form action="">
+    <form action="" method="POST" id="cu">
         Nome
-        <input type="text" class="campo" id="telefone">
+        <input type="text" class="campo" id="nome">
         Senha
-        <input type="text" class="campo" id="telefone">
+        <input type="text" class="campo" id="senha">
         Telefone
         <input type="text" class="campo" id="telefone">
         Email
@@ -31,8 +32,30 @@
 </body>
 <script src="../jquery.js"></script>
 <script>
-    $("#butao").on("click", function () {
-        
+    $("#butao").click(function() {
+        var nome = $("#nome").val();
+        var senha = $("#senha").val();
+        var telefone = $("#telefone").val();
+        var email = $("#email").val();
+       
+        var data = {
+            nome: nome,
+            senha: senha,
+            telefone: telefone,
+            email: email
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "inserir.php", 
+            data: data,
+            success: function(response) {
+                
+            },
+            error: function(xhr, status, error) {
+                console.error("An error occurred: " + error);
+            }
+        });
     });
 </script>
 </html>

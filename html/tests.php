@@ -1,5 +1,4 @@
 <?php
-    date_default_timezone_set('America/Sao_Paulo');
     
     
     class db {
@@ -8,7 +7,6 @@
             $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-
         public function cadastrouser($nome, $senha, $email, $telefone){
             $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :email, :telefone)");
             $result = $stmt->execute([
