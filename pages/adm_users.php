@@ -18,39 +18,30 @@ include("conect.php"); ?>
     <link rel="stylesheet" href="../css/admusers.css">
 </head>
 <body>
-    <form action="" method="POST" id="cu">
+    <form action="" method="POST" id="form">
         Nome
-        <input type="text" class="campo" id="nome">
+        <input type="text" id="nome" name="nome" value="">
         Senha
-        <input type="text" class="campo" id="senha">
+        <input type="text" id="senha" name="senha" value="">
         Telefone
-        <input type="text" class="campo" id="telefone">
+        <input type="text" id="telefone" name="telefone" value="">
         Email
-        <input type="text" class="campo" id="email">
-        <input type="submit" value="Cadastrar" id="butao">
+        <input type="text" id="email" name="email">
+        <input type="submit" value="Cadastrar" id="butao" value="">
     </form>
 </body>
 <script src="../jquery.js"></script>
 <script>
     $("#butao").click(function() {
-        var nome = $("#nome").val();
-        var senha = $("#senha").val();
-        var telefone = $("#telefone").val();
-        var email = $("#email").val();
+        var dados = $('#form').serialize();
        
-        var data = {
-            nome: nome,
-            senha: senha,
-            telefone: telefone,
-            email: email
-        };
 
         $.ajax({
-            type: "POST",
-            url: "inserir.php", 
-            data: data,
+				type: "POST",
+                url: "inserir.php",
+				data: dados,
             success: function(response) {
-                
+               window.open("menu.html", "_self");
             },
             error: function(xhr, status, error) {
                 console.error("An error occurred: " + error);
