@@ -12,4 +12,6 @@
     $comando->bindParam(':telefone', $telefone);
     $comando->bindParam(':email', $email);
     $resultado = $comando->execute();
+        echo "finalizado";
+    
 ?>
