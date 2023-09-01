@@ -29,5 +29,17 @@
         }
     }
 
+    class desenhar {
+
+        private $perguntas;
+        public function pergunta(){
+            $ler = file_get_contents("cu.json");
+            $perguntas = json_decode($ler);
+
+            
+            
+        }
+    }
+
     $db = new db();
 ?>
