@@ -1,6 +1,4 @@
 <?php
-    
-    
     class db {
 
         public function __construct() {
@@ -23,9 +21,9 @@
             $stmt->execute([':nome' => $nome, ':senha' => $senha]);
             $ver = $stmt->fetchColumn();
             if ($ver == 0) {
-                return false;
+                echo "false";
             }else {
-                return true;
+                echo "true";
             }
             
         }

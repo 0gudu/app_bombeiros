@@ -8,37 +8,37 @@
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-    <form action="logar.php" method="POST">
+    <form action="" method="POST" id="form">
         Nome
-        <input type="text" class="campo" id="nome">
+        <input type="text" class="campo" id="nome" name="nome">
         Senha
-        <input type="text" class="campo" id="senha">
-        <input type="submit" value="entrar" id="butao">
+        <input type="text" class="campo" id="senha" name="senha">
+        <input type="button" value="entrar" id="butao">
     </form>
     
 </body>
 <script src="../jquery.js"></script>
 <script>
     $("#butao").click(function() {
-        var nome = $("#nome").val();
-        var senha = $("#senha").val();
-        
-        var data = {
-            nome: nome,
-            senha: senha
-        };
+    var dados = $('#form').serialize();
 
-        $.ajax({
-            type: "POST",
-            url: "logar.php", 
-            data: data,
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                console.error("An error occurred: " + error);
+    $.ajax({
+        type: "POST",
+        url: "logar.php", 
+        data: dados,
+        success: function(response) {
+            if (response === "true") {
+                window.open("menu.html","_self");
+            } else {
+                $("#nome").val(""); // Reset input field value
+                $("#senha").val(""); // Reset input field value
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.error("An error occurred: " + error);
+        }
     });
+});
+
 </script>
 </html>
