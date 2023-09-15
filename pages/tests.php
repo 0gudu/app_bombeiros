@@ -1,7 +1,11 @@
 <?php
 
-include("conect.php");
     class db {
+
+        public function __construct() {
+            $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
         public function cadastrouser($nome, $senha, $email, $telefone){
             $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :email, :telefone)");
             $result = $stmt->execute([
@@ -22,14 +26,29 @@ include("conect.php");
             }else {
                 echo "true";
             }
-            
+        
         }
+        public function login($nome, $senha ) {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+            $stmt->execute([':nome' => $nome, ':senha' => $senha]);
+            $ver = $stmt->fetchColumn();
+            if ($ver == 0) {
+                echo "false";
+            }else {
+                echo "true";
+            }
+        }
+
     }
 
     class Desenhar {
         private $dados;
         private $perguntas;
     
+        public function __construct() {
+            $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
         public function exibirPerguntas($num, $pers) {
             $this->dados = file_get_contents($pers);
             $this->perguntas = json_decode($this->dados, true);
