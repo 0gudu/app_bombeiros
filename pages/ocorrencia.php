@@ -37,7 +37,7 @@
     });
     
     function next(){
-        window.open("quests.php","_self");
+        window.open("quests.php?per="+0,"_self");
         $("#pesquisa").css('top', bt);
         $("#pesquisa").text("Continuar");
         bt += add;
