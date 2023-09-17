@@ -1,4 +1,7 @@
-
+<?php
+    require("tests.php");
+    $db->checklogin(1);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

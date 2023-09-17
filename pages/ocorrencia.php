@@ -1,4 +1,6 @@
-<?php 
+<?php
+    require("tests.php");
+    $db->checklogin(2);
     if (!isset($_POST['penis'])){
         $penis = 1;
     }
@@ -20,28 +22,14 @@
 <script src="../jquery.js"></script>
 <script>
 
-    var bt = 200;
-    var add = 100;
-    var ste = 0;
     $("#pesquisa").on("click", function () {
-        
-        if (bt <= 400) {
-            next();
-        }else {
-            $("#pesquisa").text("Finalizado");
-            $("#pesquisa").css('top', bt);
-            ste = 4;
-            console.log(ste);
-        }
-        
+        next();
     });
     
     function next(){
         window.open("quests.php?per="+0,"_self");
-        $("#pesquisa").css('top', bt);
+        
         $("#pesquisa").text("Continuar");
-        bt += add;
-        ste++;
         
     }
 

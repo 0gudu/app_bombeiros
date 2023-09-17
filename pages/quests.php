@@ -1,5 +1,6 @@
 <?php 
     require("tests.php");
+    $db->checklogin(2);
     $per = $_GET["per"];
 ?>
 <!DOCTYPE html>
