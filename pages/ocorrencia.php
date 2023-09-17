@@ -46,7 +46,7 @@
     }
 
     $("#voltar").on("click", function () {
-        window.open("menu.html","_self")
+        window.open("menu.php","_self")
     });
 
 

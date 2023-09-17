@@ -1,3 +1,6 @@
+<?php
+    require("tests.php");
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,6 +11,10 @@
     <title>Menu</title>
 </head>
 <body>
+    <?php
+
+        echo $db->idtoname($_SESSION['user']);
+    ?>
     <button id="ocorrencia">Nova Ocorrencia</button>
     <button id="listar">Listar Ocorrencias</button>
 </body>

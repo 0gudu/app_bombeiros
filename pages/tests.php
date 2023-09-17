@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     class db {
 
         public function __construct() {
@@ -36,7 +36,18 @@
                 echo "false";
             }else {
                 echo "true";
+                $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+                $stmt->execute([':nome' => $nome, ':senha' => $senha]);
+                $ver = $stmt->fetchColumn();
+                $_SESSION['user'] = $ver;
             }
+        }
+
+        public function idtoname($id){
+            $stmt = $this->pdo->prepare("SELECT nome FROM usuarios WHERE id_user = :id"); 
+            $stmt->execute([':id' => $id]);
+            $ver = $stmt->fetchColumn();
+            return $ver;
         }
 
     }
