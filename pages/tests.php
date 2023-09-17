@@ -1,5 +1,6 @@
 <?php
     session_start();
+    
     class db {
 
         public function __construct() {
@@ -50,6 +51,16 @@
             return $ver;
         }
 
+        public function checklogin($page) {
+            if(!isset($_SESSION['user'])) {
+                header("Location: index.html");
+                exit();
+            }else if($page == 1){
+                header("Location: menu.php");
+                exit();
+            }
+        }
+        
     }
 
     class Desenhar {
@@ -65,7 +76,7 @@
             $this->perguntas = json_decode($this->dados, true);
             $per = $num + 1;
     
-            echo "Pergunta número $per <br><br>";
+            echo "Pergunta número $per";
             echo $this->perguntas[0][$num][0];
     
             if ($this->perguntas[0][$num][1] == "escreve") {
