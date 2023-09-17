@@ -60,7 +60,37 @@
                 exit();
             }
         }
-        
+
+        public function sttquest($userid, $stt) {
+            if ($stt == "status_cat"){
+                $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                $stmt->execute([':user' => $userid]);
+                $ver = $stmt->fetchColumn();
+                if ($ver == 0){
+                    $stmt = $this->pdo->prepare("INSERT INTO quests (user_quests, ong_cat, ong_quests) VALUES ($userid,1,0)");
+                    $stmt->execute();
+                    return 1;
+                } else {
+                    $stmt = $this->pdo->prepare("SELECT ong_cat FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                    $stmt->execute([':user' => $userid]);
+                    $ver = $stmt->fetchColumn();
+                    return $ver;
+                }
+            }else if($stt == "status_quest") {
+                $stmt = $this->pdo->prepare("SELECT ong_quests FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                $stmt->execute([':user' => $userid]);
+                $ver = $stmt->fetchColumn();
+                return $ver;
+            }else if($stt == "update_cat"){
+                $stmt = $this->pdo->prepare("SELECT ong_cat FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                $stmt->execute([':user' => $userid]);
+                $ver = $stmt->fetchColumn();
+                $update = $ver + 1;
+                $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = $update WHERE user_quests = :user AND status_cat != 5");
+                $stmt->execute([':user' => $userid]);
+            }
+            
+        }
     }
 
     class Desenhar {
@@ -76,7 +106,7 @@
             $this->perguntas = json_decode($this->dados, true);
             $per = $num + 1;
     
-            echo "Pergunta número $per";
+            echo "Pergunta número $per <br><br>";
             echo $this->perguntas[0][$num][0];
     
             if ($this->perguntas[0][$num][1] == "escreve") {

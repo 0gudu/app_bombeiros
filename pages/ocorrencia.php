@@ -15,21 +15,24 @@
     <title>Fases</title>
 </head>
 <body>
-   <button id="pesquisa">Começar</button>
+   <button id="pesquisa">categoria</button>
 
    <button id="voltar">Voltar</button>
 
 <script src="../jquery.js"></script>
 <script>
+    cat = <?php echo $db->sttquest($_SESSION['user'], "status_cat")?>;
+    quest = <?php echo $db->sttquest($_SESSION['user'], "status_quest")?>;
 
+    $("#pesquisa").text("categoria n"+cat);
     $("#pesquisa").on("click", function () {
         next();
     });
     
     function next(){
-        window.open("quests.php?per="+0,"_self");
+        url = "quests.php?per="+quest+"&cat="+cat;
+        window.open(url,"_self");
         
-        $("#pesquisa").text("Continuar");
         
     }
 

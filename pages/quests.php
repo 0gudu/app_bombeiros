@@ -2,6 +2,7 @@
     require("tests.php");
     $db->checklogin(2);
     $per = $_GET["per"];
+    $cat = $_GET["cat"];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,7 +16,7 @@
 
     <div id="pergunta">
         <?php
-            $draw->exibirPerguntas($per,"../perguntas.json");
+            $draw->exibirPerguntas($per,"../perguntas$cat.json");
         ?>
     </div>
     
@@ -26,15 +27,26 @@
 <script>
     per_prox = <?php echo $per + 1; ?>;
     per_ant = <?php echo $per - 1; ?>;
+    cat = <?php echo $cat;?>;
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
     });
     $("#proxima").on("click", function () {
-        window.open("quests.php?per="+per_prox,"_self");
+        prox();
     });
     $("#anterior").on("click", function () {
-        window.open("quests.php?per="+per_ant,"_self");
+        ant();
     }); 
+
+    function prox() {
+        url = "quests.php?per="+per_prox+"&cat="+cat;
+        window.open(url,"_self");
+    }
+
+    function ant() {
+        url = "quests.php?per="+per_ant+"&cat="+cat;
+        window.open(url,"_self");
+    }
 
 </script>
 </html>
