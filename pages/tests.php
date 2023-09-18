@@ -51,11 +51,15 @@
             return $ver;
         }
 
-        public function checklogin($page) {
+        public function checklogin() {
             if(!isset($_SESSION['user'])) {
-                header("Location: index.html");
+                header("Location: index.php");
                 exit();
-            }else if($page == 1){
+            }
+        }
+
+        public function autologin() {
+            if(isset($_SESSION['user'])) {
                 header("Location: menu.php");
                 exit();
             }
@@ -91,6 +95,18 @@
             }
             
         }
+
+        public function svquests($userid, $cat, $quest, $answers) {
+            $stmt = $this->pdo->prepare("SELECT id_quests FROM quests WHERE user_quests = :user AND ong_cat != 5");
+            $stmt->execute([':user' => $userid]);
+            $idquest = $stmt->fetchColumn();
+
+            $anw = serialize($answers);
+            $stmt = $this->pdo->prepare("INSERT INTO answer(id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer)"); 
+            $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
+        }
+
+        public function loadquests()
     }
 
     class Desenhar {
