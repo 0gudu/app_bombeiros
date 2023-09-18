@@ -1,6 +1,6 @@
 <?php
     require("tests.php");
-    $db->checklogin(2);
+    $db->checklogin();
     if (!isset($_POST['penis'])){
         $penis = 1;
     }

@@ -1,6 +1,6 @@
 <?php 
     require("tests.php");
-    $db->checklogin(2);
+    $db->checklogin();
     $per = $_GET["per"];
     $cat = $_GET["cat"];
 ?>

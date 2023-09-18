@@ -1,6 +1,6 @@
 <?php
     require("tests.php");
-    $db->checklogin(2);
+    $db->checklogin();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
