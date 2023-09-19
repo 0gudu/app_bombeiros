@@ -1,5 +1,5 @@
 <?php
-    require("tests.php");
+    require("api.php");
     $db->checklogin();
     if (!isset($_POST['penis'])){
         $penis = 1;

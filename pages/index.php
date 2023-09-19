@@ -1,5 +1,5 @@
 <?php
-    require("tests.php");
+    require("api.php");
     $db->autologin();
 ?>
 <!DOCTYPE html>

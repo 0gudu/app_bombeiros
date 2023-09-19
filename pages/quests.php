@@ -1,5 +1,5 @@
 <?php 
-    require("tests.php");
+    require("api.php");
     $db->checklogin();
     $per = $_GET["per"];
     $cat = $_GET["cat"];

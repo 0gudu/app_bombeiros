@@ -1,5 +1,5 @@
 <?php 
-    include("tests.php");
+    include("api.php");
 
     $nome = $_POST['nome'];
     $senha = $_POST['senha'];
@@ -7,6 +7,4 @@
     $email = $_POST['email'];
     
     $db->cadastrouser($nome, $senha, $email, $telefone);
-   
-    
 ?>

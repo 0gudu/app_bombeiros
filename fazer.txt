@@ -1,1 +1,0 @@
-criar função salvar questão para quando apertar o botao prox/ant na tela de quest, para salvar as modificações das questões

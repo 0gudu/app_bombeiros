@@ -106,7 +106,9 @@
             $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
         }
 
-        public function loadquests()
+        public function loadquests() {
+            
+        }
     }
 
     class Desenhar {
