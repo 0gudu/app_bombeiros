@@ -7,6 +7,7 @@
             $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
+
         public function cadastrouser($nome, $senha, $email, $telefone){
             $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :email, :telefone)");
             $result = $stmt->execute([
@@ -106,9 +107,12 @@
             $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
         }
 
-        public function loadquests() {
-            
+        public function searchcurrentidquests($userid) {
+            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
+            $stmt->execute([':user' => $userid]);
+            $ver = $stmt->fetchColumn();
         }
+        
     }
 
     class Desenhar {
@@ -162,6 +166,9 @@
         }
     }
     
+    public function loadquests($file, $userid, $quest, $cat) {
+        
+    }
     
     $draw = new Desenhar();
     $db = new db();
