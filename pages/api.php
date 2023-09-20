@@ -166,9 +166,9 @@
         }
     }
     
-    public function loadquests($file, $userid, $quest, $cat) {
+    //public function loadquests($file, $userid, $quest, $cat) {
         
-    }
+    //}
     
     $draw = new Desenhar();
     $db = new db();
