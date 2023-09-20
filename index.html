@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="/src/css/login.css">
+</head>
+<body>
+    <form action="" method="POST" id="form">
+        Nome
+        <input type="text" class="campo" id="nome" name="nome">
+        Senha
+        <input type="password" class="campo" id="senha" name="senha"> 
+        <input type="button" value="entrar" id="butao">
+    </form>
+    
+</body>
+<script src="/src/js/jquery.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#butao").click(function() {
+            var dados = $('#form').serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/src/php/callfuncphps/logar.php", 
+                data: dados,
+                success: function(response) {
+                    if (response === "true") {
+                        window.open("menu.php","_self");
+                    } else {
+                        $("#nome").val(""); 
+                        $("#senha").val(""); 
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred: " + error);
+                }
+            });
+        });
+    });
+</script>
+</html>

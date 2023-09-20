@@ -5,12 +5,9 @@ body {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     justify-items: center;
     align-items: center;
     align-content: center;
 }
 
-button {
-    margin: 25%;
-}

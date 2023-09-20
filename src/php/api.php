@@ -53,15 +53,16 @@
         }
 
         public function checklogin() {
-            if(!isset($_SESSION['user'])) {
-                header("Location: index.php");
+            if (!isset($_SESSION['user'])) {
+                header("Location: ../../index.html");
                 exit();
             }
         }
+        
 
         public function autologin() {
             if(isset($_SESSION['user'])) {
-                header("Location: menu.php");
+                header("Location: src/php/menu.php");
                 exit();
             }
         }

@@ -20,14 +20,15 @@
     <button id="listar">Listar Ocorrencias</button>
     <button id="ed_perfil">Editar Perfil</button>
 </body>
-<script src="../jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script>
     $("#ocorrencia").on("click", function () {
         window.open("ocorrencia.php", "_self");
     });
 
     $("#listar").on("click", function () {
-        window.open("index.html", "_self");
+        window.open("../../index.html", "_self");
     });
+
 </script>
 </html>
