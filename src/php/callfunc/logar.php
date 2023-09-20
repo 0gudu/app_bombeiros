@@ -1,5 +1,5 @@
 <?php 
-include("../api.php");
+include("../../includes/api.php");
 
 $nome = $_POST['nome'];
 $senha = $_POST['senha'];

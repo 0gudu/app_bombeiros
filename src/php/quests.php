@@ -1,5 +1,5 @@
 <?php 
-    require("api.php");
+    require("../includes/api.php");
     $db->checklogin();
     $per = $_GET["per"];
     $cat = $_GET["cat"];

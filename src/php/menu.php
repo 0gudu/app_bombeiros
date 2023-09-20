@@ -1,5 +1,5 @@
 <?php
-    require("api.php");
+    require("../includes/api.php");
     $db->checklogin();
 ?>
 <!DOCTYPE html>
