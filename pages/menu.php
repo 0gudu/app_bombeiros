@@ -18,6 +18,7 @@
     ?>
     <button id="ocorrencia">Nova Ocorrencia</button>
     <button id="listar">Listar Ocorrencias</button>
+    <button id="ed_perfil">Editar Perfil</button>
 </body>
 <script src="../jquery.js"></script>
 <script>
