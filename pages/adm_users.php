@@ -20,6 +20,10 @@
         
         <input type="button" value="Cadastrar" id="butao" value="">
     </form>
+    <div id="users">
+        
+        
+    </div>
 </body>
 <script src="../jquery.js"></script>
 <script>

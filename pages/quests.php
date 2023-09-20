@@ -28,6 +28,9 @@
     per_prox = <?php echo $per + 1; ?>;
     per_ant = <?php echo $per - 1; ?>;
     cat = <?php echo $cat;?>;
+    user = <?php echo $_SESSION['user']; ?>;
+    cat_prox = cat + 1;
+
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
     });
@@ -36,7 +39,10 @@
     });
     $("#anterior").on("click", function () {
         ant();
-    }); 
+    });
+    $("#end").on("click", function () {
+        proxcat();
+    });
 
     function prox() {
         url = "quests.php?per="+per_prox+"&cat="+cat;
@@ -45,6 +51,10 @@
 
     function ant() {
         url = "quests.php?per="+per_ant+"&cat="+cat;
+        window.open(url,"_self");
+    }
+    function proxcat() {
+        url = "proxcat.php?user="+user+"&cat="+cat_prox;
         window.open(url,"_self");
     }
 

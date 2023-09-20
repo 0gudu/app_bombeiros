@@ -1,0 +1,2 @@
+atualizar bagui pra pular linha e botar subtitulo
+botar imagem

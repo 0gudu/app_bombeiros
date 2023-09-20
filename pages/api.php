@@ -112,6 +112,11 @@
             $stmt->execute([':user' => $userid]);
             $ver = $stmt->fetchColumn();
         }
+
+        public function proxcat($userid, $cat) {
+            $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = :cat WHERE user_quests = :user AND ong_cat != 5");
+            $stmt->execute([':user' => $userid, ':cat' => $cat]);
+        }
         
     }
 
