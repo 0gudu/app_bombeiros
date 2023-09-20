@@ -19,7 +19,7 @@
 
    <button id="voltar">Voltar</button>
 
-<script src="../jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script>
     cat = <?php echo $db->sttquest($_SESSION['user'], "status_cat")?>;
     quest = <?php echo $db->sttquest($_SESSION['user'], "status_quest")?>;

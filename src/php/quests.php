@@ -16,14 +16,14 @@
 
     <div id="pergunta">
         <?php
-            $draw->exibirPerguntas($per,"../perguntas$cat.json");
+            $draw->exibirPerguntas($per,"../json/perguntas$cat.json");
         ?>
     </div>
     
     <button id="voltar">Voltar</button>
     
 </body>
-<script src="../jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script>
     per_prox = <?php echo $per + 1; ?>;
     per_ant = <?php echo $per - 1; ?>;

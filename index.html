@@ -5,19 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
-    <link rel="stylesheet" href="/src/css/login.css">
+    <link rel="stylesheet" href="src/css/login.css">
 </head>
 <body>
     <form action="" method="POST" id="form">
         Nome
         <input type="text" class="campo" id="nome" name="nome">
         Senha
-        <input type="password" class="campo" id="senha" name="senha"> 
+        <input type="text" class="campo" id="senha" name="senha"> 
         <input type="button" value="entrar" id="butao">
     </form>
     
 </body>
-<script src="/src/js/jquery.js"></script>
+<script src="src/js/jquery.js"></script>
 <script>
     $(document).ready(function() {
         $("#butao").click(function() {
@@ -25,13 +25,14 @@
 
             $.ajax({
                 type: "POST",
-                url: "/src/php/callfuncphps/logar.php", 
+                url: "src/php/callfunc/logar.php", 
                 data: dados,
                 success: function(response) {
+                    console.log(response);
                     if (response === "true") {
-                        window.open("menu.php","_self");
+                        window.open("src/php/menu.php","_self");
                     } else {
-                        $("#nome").val(""); 
+                        $("#nome").val("");
                         $("#senha").val(""); 
                     }
                 },
