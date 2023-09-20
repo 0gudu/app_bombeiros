@@ -54,7 +54,7 @@
         window.open(url,"_self");
     }
     function proxcat() {
-        url = "proxcat.php?user="+user+"&cat="+cat_prox;
+        url = "callfunc/proxcat.php?user="+user+"&cat="+cat_prox;
         window.open(url,"_self");
     }
 
