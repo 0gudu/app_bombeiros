@@ -43,7 +43,7 @@
             var dados = $('#form').serialize();
 
             $.ajax({
-                type: "POST",
+                type: "POST",   
                 url: "src/php/callfunc/logar.php", 
                 data: dados,
                 success: function(response) {
