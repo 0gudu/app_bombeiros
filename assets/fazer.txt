@@ -1,2 +1,4 @@
-atualizar bagui pra pular linha e botar subtitulo
+atualizar função de carregamento de questões:
+pular linha 
+botar subtitulo
 botar imagem
