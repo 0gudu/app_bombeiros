@@ -13,8 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/ocorrencia.css">
     <title>Fases</title>
+    <link rel="stylesheet" href="../../assets/static/css/bootstrap.min.css">
+    <script src="../../assets/static/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <?php 
+    include("../includes/header.php")
+    ?>
    <button id="pesquisa">categoria</button>
 
    <button id="voltar">Voltar</button>
