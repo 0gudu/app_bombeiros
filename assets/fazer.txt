@@ -1,4 +1,4 @@
 atualizar função de carregamento de questões:
-pular linha 
+pular linha
 botar subtitulo
 botar imagem
