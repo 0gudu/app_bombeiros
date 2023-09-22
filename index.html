@@ -28,7 +28,7 @@
                         <label for="senha" class="form-label">Senha</label>
                         <input type="text" class="form-control" id="senha" name="senha">
                     </div>
-                    <input type="submit" class="btn btn-danger" value="Entrar" id="butao">
+                    <input type="button" class="btn btn-danger" value="Entrar" id="butao">
                 </form>
             </div>
         </div>
@@ -41,10 +41,9 @@
     $(document).ready(function() {
         $("#butao").click(function() {
             var dados = $('#form').serialize();
-
             $.ajax({
                 type: "POST",   
-                url: "src/php/callfunc/logar.php", 
+                url: "src/php/callfunc/logar.php",
                 data: dados,
                 success: function(response) {
                     console.log(response);
