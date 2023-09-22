@@ -138,17 +138,44 @@
             echo $this->perguntas[0][$num][0];
     
             if ($this->perguntas[0][$num][1] == "escreve") {
-                for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
-                    echo "<input type='text' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "'>";
-                };
+                $extra = 0;
+                for ($desc = 0; $desc < ($this->perguntas[0][$num][2] + $extra); $desc++) {
+                    $caracs = $this->perguntas[0][$num][$desc + 3];
+                    $firstcarc = $caracs[0];
+                    $caracs = substr($caracs, 1);
+                    if ($firstcarc == "&") {
+                        echo "<p> $caracs <p>";
+                        $extra++;
+                    }elseif ($firstcarc == "%") {
+                        echo "<br>";
+                        $extra++;
+                    }else
+                        echo "<input type='text' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "'>";
+                    };
+                    
+                }
             } elseif ($this->perguntas[0][$num][1] == "check") {
-                for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
+                $extra = 0;
+                for ($desc = 0; $desc < ($this->perguntas[0][$num][2] + $extra); $desc++) {
+                    $caracs = $this->perguntas[0][$num][$desc + 3];
+                    $firstcarc = $caracs[0];
+                    $caracs = substr($caracs, 1);
+                    if ($firstcarc == "&") {
+                        
+                        echo "<p> $caracs <p>";
+                        $extra++;
+                    }else if ($firstcarc == "%") {
+                        echo "<br>";
+                        $extra++;
+                    }else {
+                
                     echo "<span> <input type='checkbox' id='penis$desc'>
                     <label for='penis$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
-                };
+                    };
+                }
             } else {
                 echo "<select name='sim' id='sim'>";
-    
+                
                 for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
                     $optionValue = $this->perguntas[0][$num][$desc + 3];
                     echo "<option value='$optionValue'>$optionValue</option>";
