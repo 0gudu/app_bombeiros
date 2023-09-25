@@ -14,11 +14,11 @@
 </head>
 <body>
 
-    <div id="pergunta">
+    <form id="pergunta">
         <?php
             $draw->exibirPerguntas($per,"../json/perguntas$cat.json");
         ?>
-    </div>
+    </form>
     
     <button id="voltar">Voltar</button>
     
@@ -30,6 +30,8 @@
     cat = <?php echo $cat;?>;
     user = <?php echo $_SESSION['user']; ?>;
     cat_prox = cat + 1;
+    quest = <?php echo $per; ?>;
+    var answers = $('#pergunta').serializeArray();
 
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
@@ -45,10 +47,10 @@
     });
 
     function prox() {
-        url = "quests.php?per="+per_prox+"&cat="+cat;
-        window.open(url,"_self");
-    }
+        var url = "/callfunc/svvquest.php?cat=" + cat + "&quest=" + quest + "&answers=" + answers;
 
+        window.open(url, "_self");
+    }
     function ant() {
         url = "quests.php?per="+per_ant+"&cat="+cat;
         window.open(url,"_self");

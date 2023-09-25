@@ -153,7 +153,7 @@
                         echo "<input type='text' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "'>";
                     };
                     
-                }
+                
             } elseif ($this->perguntas[0][$num][1] == "check") {
                 $extra = 0;
                 for ($desc = 0; $desc < ($this->perguntas[0][$num][2] + $extra); $desc++) {
