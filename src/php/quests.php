@@ -3,6 +3,7 @@
     $db->checklogin();
     $per = $_GET["per"];
     $cat = $_GET["cat"];
+    $answers = $draw->loadquests("../json/perguntas$cat.json", $_SESSION['user'], $cat, $per);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,7 +32,7 @@
     user = <?php echo $_SESSION['user']; ?>;
     cat_prox = cat + 1;
     quest = <?php echo $per; ?>;
-    
+    var respostas = <?php echo $answers;?>;
 
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");

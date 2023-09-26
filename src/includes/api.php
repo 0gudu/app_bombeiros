@@ -104,8 +104,17 @@
             $idquest = $stmt->fetchColumn();
 
             $anw = serialize($answers);
-            $stmt = $this->pdo->prepare("INSERT INTO answers(id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer)"); 
+            $stmt = $this->pdo->prepare("SELECT COUNT(*)FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
             $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
+            $cc = $stmt->fetchColumn();
+            if ($cc > 0){
+                $stmt = $this->pdo->prepare("SELECT COUNT(*)FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
+                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
+            }else {
+                $stmt = $this->pdo->prepare("INSERT INTO answers(id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer)"); 
+                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
+            }
+       
         }
 
         public function searchcurrentidquests($userid) {
@@ -187,7 +196,7 @@
     
     
             if ($num != 0) {
-                echo "<button id='anterior'>ant</button>";
+                echo '<button type="button" id="anterior">ant</button>';
             };  
     
             $coisas = count($this->perguntas[0]) - 1;
@@ -195,22 +204,32 @@
             if ($coisas != $num) {
                 echo '<button type="button" id="proxima">prox</button>';
             } else {
-                echo '<button id="end">acabar</button>';
+                echo '<button type="button" id="end">acabar</button>';
             };
         }
-    }
     
-    public function loadquests($pers, $userid, $cat, $quest) {
-        $idquest = $db->searchcurrentidquests($userid);
+    
+        public function loadquests($file, $userid, $cat, $quest) {
+            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
+            $stmt->execute([':user' => $userid]);
+            $idquest = $stmt->fetchColumn();
+            
 
-        $stmt = $this->pdo->prepare("SELECT answer FROM answers WHERE id_user = :user AND id_quests = :idquest AND cat = :cat AND quest = :quest");
-        $stmt->execute([':user' => $userid, ':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);
-        $ver = $stmt->fetchColumn();
-        
-        $repostas = unserialize($ver);
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM answers WHERE id_user = :user AND id_quests = :idquest AND cat = :cat AND quest = :quest");
+            $stmt->execute([':user' => $userid, ':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+            $temresposta = $stmt->fetchColumn();
+            
+            if ($temresposta > 0) {
+                $stmt = $this->pdo->prepare("SELECT answer FROM answers WHERE id_user = :user AND id_quests = :idquest AND cat = :cat AND quest = :quest");
+                $stmt->execute([':user' => $userid, ':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+                $ver = $stmt->fetchColumn();
+            
+                $respostas = unserialize($ver);
 
-        
-
+                return $respostas;
+            }
+            
+        }
     }
     
     $draw = new Desenhar();
