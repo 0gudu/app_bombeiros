@@ -31,7 +31,7 @@
     user = <?php echo $_SESSION['user']; ?>;
     cat_prox = cat + 1;
     quest = <?php echo $per; ?>;
-    var answers = $('#pergunta').serializeArray();
+    
 
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
@@ -47,10 +47,12 @@
     });
 
     function prox() {
-        var url = "/callfunc/svvquest.php?cat=" + cat + "&quest=" + quest + "&answers=" + answers;
-
+        var answers = $('#pergunta').serialize();
+        var url = "callfunc/svvquest.php?cat=" + cat + "&quest=" + quest + "&answers=" + answers;
+        console.log(answers);
         window.open(url, "_self");
     }
+
     function ant() {
         url = "quests.php?per="+per_ant+"&cat="+cat;
         window.open(url,"_self");

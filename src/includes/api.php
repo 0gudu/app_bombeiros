@@ -99,12 +99,12 @@
         }
 
         public function svquests($userid, $cat, $quest, $answers) {
-            $stmt = $this->pdo->prepare("SELECT id_quests FROM quests WHERE user_quests = :user AND ong_cat != 5");
+            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid]);
             $idquest = $stmt->fetchColumn();
 
             $anw = serialize($answers);
-            $stmt = $this->pdo->prepare("INSERT INTO answer(id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer)"); 
+            $stmt = $this->pdo->prepare("INSERT INTO answers(id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer)"); 
             $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
         }
 
@@ -112,6 +112,7 @@
             $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid]);
             $ver = $stmt->fetchColumn();
+            return $ver;
         }
 
         public function proxcat($userid, $cat) {
@@ -144,13 +145,13 @@
                     $firstcarc = $caracs[0];
                     $caracs = substr($caracs, 1);
                     if ($firstcarc == "&") {
-                        echo "<p> $caracs <p>";
+                        echo "<p> $caracs </p>";
                         $extra++;
                     }elseif ($firstcarc == "%") {
                         echo "<br>";
                         $extra++;
                     }else
-                        echo "<input type='text' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "'>";
+                        echo "<input type='text' name='perg".$desc."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "'>";
                     };
                     
                 
@@ -169,12 +170,12 @@
                         $extra++;
                     }else {
                 
-                    echo "<span> <input type='checkbox' id='penis$desc'>
+                    echo "<span> <input type='checkbox' name='perg".$desc."' id='penis$desc'>
                     <label for='penis$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
                     };
                 }
             } else {
-                echo "<select name='sim' id='sim'>";
+                echo "<select name='sim' name='perg1' id='sim'>";
                 
                 for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
                     $optionValue = $this->perguntas[0][$num][$desc + 3];
@@ -187,21 +188,30 @@
     
             if ($num != 0) {
                 echo "<button id='anterior'>ant</button>";
-            };
+            };  
     
             $coisas = count($this->perguntas[0]) - 1;
             
             if ($coisas != $num) {
-                echo '<button id="proxima">prox</button>';
+                echo '<button type="button" id="proxima">prox</button>';
             } else {
                 echo '<button id="end">acabar</button>';
             };
         }
     }
     
-    //public function loadquests($file, $userid, $quest, $cat) {
+    public function loadquests($pers, $userid, $cat, $quest) {
+        $idquest = $db->searchcurrentidquests($userid);
+
+        $stmt = $this->pdo->prepare("SELECT answer FROM answers WHERE id_user = :user AND id_quests = :idquest AND cat = :cat AND quest = :quest");
+        $stmt->execute([':user' => $userid, ':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+        $ver = $stmt->fetchColumn();
         
-    //}
+        $repostas = unserialize($ver);
+
+        
+
+    }
     
     $draw = new Desenhar();
     $db = new db();
