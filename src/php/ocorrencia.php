@@ -37,8 +37,6 @@
     function next(){
         url = "quests.php?per="+quest+"&cat="+cat;
         window.open(url,"_self");
-        
-        
     }
 
     $("#voltar").on("click", function () {

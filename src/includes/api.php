@@ -1,13 +1,16 @@
 <?php
     session_start();
     
+    //class referente as funções que alteram algo no banco de dados
     class db {
 
+        //no momento em que a class é criada, o codigo de conexão com o banco de dados é rodado
         public function __construct() {
             $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 
+        //função responsavel por cadastrar o usuario
         public function cadastrouser($nome, $senha, $email, $telefone){
             $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :email, :telefone)");
             $result = $stmt->execute([
@@ -16,13 +19,15 @@
             ':email' => $email,
             ':telefone' => $telefone
         ]);
-            return "cu";
         }
 
+        //função para checar se o usuario existe, dando as informações como nome e senha para verificação
         public function checkuser($nome, $senha) {
+            //verifica se existe na tabela com as mesmo nome e senha 
             $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE nome = :nome AND senha = :senha"); 
             $stmt->execute([':nome' => $nome, ':senha' => $senha]);
             $ver = $stmt->fetchColumn();
+            //retorna se existe ou não
             if ($ver == 0) {
                 echo "false";
             }else {
@@ -30,28 +35,39 @@
             }
         
         }
+
+        //função responsavel por logar na conta
         public function login($nome, $senha ) {
+
             $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE nome = :nome AND senha = :senha"); 
             $stmt->execute([':nome' => $nome, ':senha' => $senha]);
             $ver = $stmt->fetchColumn();
+
             if ($ver == 0) {
                 echo "false";
             }else {
                 echo "true";
+
                 $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
                 $stmt->execute([':nome' => $nome, ':senha' => $senha]);
                 $ver = $stmt->fetchColumn();
+
                 $_SESSION['user'] = $ver;
             }
         }
 
+        //função responsavel por converter a id do usuario para o nome do usuario
         public function idtoname($id){
             $stmt = $this->pdo->prepare("SELECT nome FROM usuarios WHERE id_user = :id"); 
             $stmt->execute([':id' => $id]);
             $ver = $stmt->fetchColumn();
-            return $ver;
+
+            $nome = htmlspecialchars($ver);
+
+            return $nome;
         }
 
+        //função responsavel por validar o login
         public function checklogin() {
             if (!isset($_SESSION['user'])) {
                 header("Location: ../../index.html");
@@ -99,6 +115,14 @@
         }
 
         public function svquests($userid, $cat, $quest, $answers) {
+
+            $userid = filter_var($userid, FILTER_VALIDATE_INT);
+            $cat = filter_var($cat, FILTER_VALIDATE_INT);
+            $quest = filter_var($quest, FILTER_VALIDATE_INT);
+
+            if (!$userid || !$cat || !$quest) {
+                return;
+            }
             $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid]);
             $idquest = $stmt->fetchColumn();
@@ -227,6 +251,8 @@
                 $respostas = unserialize($ver);
 
                 return $respostas;
+            }else {
+                return 0;
             }
             
         }
