@@ -115,31 +115,33 @@
         }
 
         public function svquests($userid, $cat, $quest, $answers) {
-
             $userid = filter_var($userid, FILTER_VALIDATE_INT);
             $cat = filter_var($cat, FILTER_VALIDATE_INT);
             $quest = filter_var($quest, FILTER_VALIDATE_INT);
-
+        
             if (!$userid || !$cat || !$quest) {
                 return;
             }
+            
             $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid]);
             $idquest = $stmt->fetchColumn();
-
+        
             $anw = serialize($answers);
-            $stmt = $this->pdo->prepare("SELECT COUNT(*)FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
-            $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
+        
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
+            $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
             $cc = $stmt->fetchColumn();
-            if ($cc > 0){
-                $stmt = $this->pdo->prepare("SELECT COUNT(*)FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
-                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
-            }else {
-                $stmt = $this->pdo->prepare("INSERT INTO answers(id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer)"); 
-                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]);
+        
+            if ($cc > 0) {
+                $stmt = $this->pdo->prepare("DELETE FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
+                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+            } else {
+                $stmt = $this->pdo->prepare("INSERT INTO answers (id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer) ON DUPLICATE KEY UPDATE answer = :answer");
+                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]); 
             }
-       
         }
+        
 
         public function searchcurrentidquests($userid) {
             $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
@@ -233,11 +235,10 @@
         }
     
     
-        public function loadquests($file, $userid, $cat, $quest) {
+        public function loadquests($userid, $cat, $quest) {
             $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid]);
             $idquest = $stmt->fetchColumn();
-            
 
             $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM answers WHERE id_user = :user AND id_quests = :idquest AND cat = :cat AND quest = :quest");
             $stmt->execute([':user' => $userid, ':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);

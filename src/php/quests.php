@@ -3,7 +3,8 @@
     $db->checklogin();
     $per = $_GET["per"];
     $cat = $_GET["cat"];
-    $answers = $draw->loadquests("../json/perguntas$cat.json", $_SESSION['user'], $cat, $per);
+    $answers = $draw->loadquests($_SESSION['user'], $cat, $per);
+    $ans = json_decode($answers);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,7 +33,7 @@
     user = <?php echo $_SESSION['user']; ?>;
     cat_prox = cat + 1;
     quest = <?php echo $per; ?>;
-    var respostas = <?php echo $answers;?>;
+    var respostas = <?php echo $ans;?>;
 
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
@@ -48,11 +49,34 @@
     });
 
     function prox() {
-        var answers = $('#pergunta').serialize();
-        var url = "callfunc/svvquest.php?cat=" + cat + "&quest=" + quest + "&answers=" + answers;
-        console.log(answers);
-        window.open(url, "_self");
-    }
+    var answers = $('#pergunta').serialize();
+    
+    
+    var data = {
+        cat: cat,
+        quest: quest,
+        answers: answers
+    };
+    
+    $.ajax({
+        type: "POST",
+        url: "svvquest.php",
+
+        data: data,
+        success: function(response) {
+            var url = "quests.php?per=" + per_prox + "&cat=" + cat;
+            console.log(answers);
+            console.log(response);
+
+            
+            window.open(url, "_self");
+        },
+        error: function(xhr, status, error) {
+            console.error("An error occurred: " + error);
+        }
+    });
+}
+
 
     function ant() {
         url = "quests.php?per="+per_ant+"&cat="+cat;
