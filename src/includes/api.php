@@ -170,6 +170,7 @@
     
             if ($this->perguntas[0][$num][1] == "escreve") {
                 $extra = 0;
+                $input = 0;
                 for ($desc = 0; $desc < ($this->perguntas[0][$num][2] + $extra); $desc++) {
                     $caracs = $this->perguntas[0][$num][$desc + 3];
                     $firstcarc = $caracs[0];
@@ -177,11 +178,15 @@
                     if ($firstcarc == "&") {
                         echo "<p> $caracs </p>";
                         $extra++;
+                        $input--;
                     }elseif ($firstcarc == "%") {
                         echo "<br>";
                         $extra++;
+                        $input--;
                     }else
-                        echo "<input type='text' name='perg".$desc."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "'>";
+                        echo "<input type='text' id='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' name='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' value=''>";
+                        $input++;
+                        
                     };
                     
                 
@@ -200,12 +205,12 @@
                         $extra++;
                     }else {
                 
-                    echo "<span> <input type='checkbox' name='perg".$desc."' id='penis$desc'>
+                    echo "<span> <input type='checkbox' name='perg".$desc."' id='penis$desc' value=''>
                     <label for='penis$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
                     };
                 }
             } else {
-                echo "<select name='sim' name='perg1' id='sim'>";
+                echo "<select name='perg0' id='sim' value='a'>";
                 
                 for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
                     $optionValue = $this->perguntas[0][$num][$desc + 3];
