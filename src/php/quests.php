@@ -34,13 +34,16 @@
     cat_prox = cat + 1;
     quest = <?php echo $per; ?>;
     var respostas_json = '<?php echo $ans;?>';
-    /*if (respostas_json != 0){
+    if (respostas_json != 0){
         respostas = JSON.parse(respostas_json);
-        console.log(respostas[1].value);
-        for(animal = 0;animal = repostas.lenght; respostas ++){
+        console.log("a");
 
+        num = Object.keys(respostas).length;
+        console.log(num);
+        for(var perg = 0;perg > num; perg ++){
+            $("#perg" + animal).val(repostas[perg].value);
         }
-    }*/
+    }
     
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
