@@ -4,7 +4,7 @@
     $per = $_GET["per"];
     $cat = $_GET["cat"];
     $answers = $draw->loadquests($_SESSION['user'], $cat, $per);
-    $ans = json_decode($answers);
+    $ans = json_encode($answers);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -33,8 +33,15 @@
     user = <?php echo $_SESSION['user']; ?>;
     cat_prox = cat + 1;
     quest = <?php echo $per; ?>;
-    var respostas = <?php echo $ans;?>;
+    var respostas_json = '<?php echo $ans;?>';
+    /*if (respostas_json != 0){
+        respostas = JSON.parse(respostas_json);
+        console.log(respostas[1].value);
+        for(animal = 0;animal = repostas.lenght; respostas ++){
 
+        }
+    }*/
+    
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
     });
@@ -49,10 +56,13 @@
     });
 
     function prox() {
-    var answers = $('#pergunta').serialize();
+    var answ = $('#pergunta').serializeArray();
+    var answers = JSON.stringify(answ);
+    var url = "callfunc/svvquest.php?cat=" + cat + "&quest=" + quest + "&answers=" + answers;
+    console.log(answ);
+    window.open(url, "_self");
     
-    
-    var data = {
+    /*var data = {
         cat: cat,
         quest: quest,
         answers: answers
@@ -75,6 +85,8 @@
             console.error("An error occurred: " + error);
         }
     });
+    */
+
 }
 
 

@@ -6,6 +6,7 @@
 
         //no momento em que a class é criada, o codigo de conexão com o banco de dados é rodado
         public function __construct() {
+
             $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
@@ -114,20 +115,12 @@
             
         }
 
-        public function svquests($userid, $cat, $quest, $answers) {
-            $userid = filter_var($userid, FILTER_VALIDATE_INT);
-            $cat = filter_var($cat, FILTER_VALIDATE_INT);
-            $quest = filter_var($quest, FILTER_VALIDATE_INT);
-        
-            if (!$userid || !$cat || !$quest) {
-                return;
-            }
-            
+        public function svquests($userid, $cat, $quest, $anw) {         
             $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid]);
             $idquest = $stmt->fetchColumn();
         
-            $anw = serialize($answers);
+            
         
             $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
             $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
@@ -136,6 +129,8 @@
             if ($cc > 0) {
                 $stmt = $this->pdo->prepare("DELETE FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
                 $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+                $stmt = $this->pdo->prepare("INSERT INTO answers (id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer) ON DUPLICATE KEY UPDATE answer = :answer");
+                $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]); 
             } else {
                 $stmt = $this->pdo->prepare("INSERT INTO answers (id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer) ON DUPLICATE KEY UPDATE answer = :answer");
                 $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]); 
@@ -249,7 +244,7 @@
                 $stmt->execute([':user' => $userid, ':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);
                 $ver = $stmt->fetchColumn();
             
-                $respostas = unserialize($ver);
+                $respostas = json_decode($ver);
 
                 return $respostas;
             }else {
