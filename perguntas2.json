@@ -67,11 +67,31 @@
         "Flexão anormal(decorticação)",
         "Extensão anormal(descerebração)",
         "Ausência(paralisia flácida, hipotonia"
+       ],
+       [
+        "Problemas encontrador suspeitos",
+        "check",
+        18,
+        "PSIQUIÁTRICO",
+        "REPIRATÓRIO",
+        "Dpoc",
+        "Inalação fumaça",
+        "DIABETES",
+        "Hiperglicemia",
+        "Hipoclicemia",
+        "OBSTÉTRICO",
+        "Parto emergencial",
+        "Gestante",
+        "Hemor. excessiva",
+        "TRANSPORTE",
+        "Aéreo",
+        "Clícico",
+        "Emergencial",
+        "Pós-trauma",
+        "Samu",
+        "Sem remoção"
 
-
-
-       ]
-       ,
+       ],
        [
           "Sinais e Sintomas",
           "check",
