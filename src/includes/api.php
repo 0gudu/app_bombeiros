@@ -150,8 +150,6 @@
                 $stmt->execute([':user' => $userid]);
                 $idquest = $stmt->fetchColumn();
             
-                
-            
                 $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
                 $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
                 $cc = $stmt->fetchColumn();
@@ -182,6 +180,21 @@
         public function proxcat($userid, $cat) {
             $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = :cat WHERE user_quests = :user AND ong_cat != 5");
             $stmt->execute([':user' => $userid, ':cat' => $cat]);
+        }
+
+        public function updateongquest($userid, $quest) {
+            try {
+                $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                $stmt->execute([':user' => $userid]);
+                $idquest = $stmt->fetchColumn();
+
+                $stmt = $this->pdo->prepare("UPDATE quests SET ong_quests = $quest WHERE id_quest = :idquest");
+                $stmt->execute([':idquest' => $idquest]);
+                $idquest = $stmt->fetchColumn();
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            }      
+            
         }
         
     }
@@ -227,6 +240,9 @@
                             echo "<br>";
                             $extra++;
                             $input--;
+                        }elseif ($firstcarc == "$"){
+                            echo "<span> <input type='checkbox' name='perg".$input."' id='penis$desc' value=''>
+                            <label for='penis$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
                         }else
                             echo "<input type='text' id='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' name='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' value=''>";
                             $input++;

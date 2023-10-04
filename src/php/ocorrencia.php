@@ -20,19 +20,37 @@
     <?php 
     include("../includes/header.php")
     ?>
-   <button id="pesquisa">categoria</button>
+    <button class="btn btn-secondary" id="cat1">categoria 1 title</button>
+    <button class="btn btn-secondary" id="cat2">categoria 2 title</button>
+    <button class="btn btn-secondary" id="cat3">categoria 3 title</button>
+    <button class="btn btn-secondary" id="cat4">categoria 4 title</button>
+    <button class="btn btn-secondary" id="cat5">categoria 5 title</button>
+    <button class="btn btn-secondary" id="cat6">categoria 6 title</button>
 
-   <button id="voltar">Voltar</button>
+    <button id="voltar">Voltar</button>
 
-<script src="../js/jquery.js"></script>
-<script>
-    cat = <?php echo $db->sttquest($_SESSION['user'], "status_cat")?>;
-    quest = <?php echo $db->sttquest($_SESSION['user'], "status_quest")?>;
+    <script src="../js/jquery.js"></script>
+    <script>
+        var cat = <?php echo $db->sttquest($_SESSION['user'], "status_cat"); ?>;
+        var quest = <?php echo $db->sttquest($_SESSION['user'], "status_quest"); ?>;
 
-    $("#pesquisa").text("categoria n"+cat);
-    $("#pesquisa").on("click", function () {
-        next();
-    });
+        for (var i = 1; i <= 5; i++) {
+            var buttonId = "#cat" + i;
+            $(buttonId).on("click", function () {
+                $(this).removeClass("btn-secondary btn-success btn-danger");
+
+                if (cat == i) {
+                    var url = "quests.php?per=" + quest + "&cat=" + i;
+                    window.open(url, "_self");
+                    $(this).addClass("btn-secondary");
+                } else if (cat > i) {
+                    $(this).addClass("btn-success");
+                } else {
+                    $(this).addClass("btn-danger");
+                }
+            });
+        };
+    
     
     function next(){
         url = "quests.php?per="+quest+"&cat="+cat;

@@ -27,12 +27,12 @@
 </body>
 <script src="../js/jquery.js"></script>
 <script>
-    per_prox = <?php echo $per + 1; ?>;
-    per_ant = <?php echo $per - 1; ?>;
-    cat = <?php echo $cat;?>;
-    user = <?php echo $_SESSION['user']; ?>;
-    cat_prox = cat + 1;
-    quest = <?php echo $per; ?>;
+    var per_prox = <?php echo $per + 1; ?>;
+    var per_ant = <?php echo $per - 1; ?>;
+    var cat = <?php echo $cat;?>;
+    var user = <?php echo $_SESSION['user']; ?>;
+    var cat_prox = cat + 1;
+    var quest = <?php echo $per; ?>;
     var respostas_json = '<?php echo $ans;?>';
 
     if (respostas_json !== '0') {
@@ -62,11 +62,9 @@
     function prox() {
     var answ = $('#pergunta').serializeArray();
     var answers = JSON.stringify(answ);
-    var url = "callfunc/svvquest.php?cat=" + cat + "&quest=" + quest + "&answers=" + answers;
-    console.log(answ);
-    window.open(url, "_self");
+    //console.log(answ);
     
-    /*var data = {
+    var data = {
         cat: cat,
         quest: quest,
         answers: answers
@@ -74,12 +72,11 @@
     
     $.ajax({
         type: "POST",
-        url: "svvquest.php",
+        url: "callfunc/svvquest.php",
 
         data: data,
         success: function(response) {
             var url = "quests.php?per=" + per_prox + "&cat=" + cat;
-            console.log(answers);
             console.log(response);
 
             
@@ -89,7 +86,6 @@
             console.error("An error occurred: " + error);
         }
     });
-    */
 
 }
 
