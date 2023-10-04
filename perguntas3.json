@@ -24,6 +24,20 @@
           "Pedestre"
        ],
        [
+          "Decisão de transporte",
+          "check",
+          4,
+          "&☹️",
+          "Crítico",
+          "&🥴",
+          "instável",
+          "&😐",
+          "Potencialmente Instável",
+          "&🙂",
+          "Estável"
+
+       ],
+       [
           "Equipe de atendimento",
           "escreve",
           5,
