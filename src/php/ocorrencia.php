@@ -33,38 +33,43 @@
 
 <script src="../js/jquery.js"></script>
 <script>
-    var cat = <?php echo $db->sttquest($_SESSION['user'], "status_cat"); ?>;
-    var quest = <?php echo $db->sttquest($_SESSION['user'], "status_quest"); ?>;
+        var cat = <?php echo $db->sttquest($_SESSION['user'], "status_cat"); ?>;
+        var quest = <?php echo $db->sttquest($_SESSION['user'], "status_quest"); ?>;
 
-    for (var i = 1; i <= 5; i++) {
-        createButtonClickHandler(i);
-    }
+        for (var i = 1; i <= 6; i++) {
+            var buttonId = "#cat" + i;
 
-    function createButtonClickHandler(buttonNumber) {
-        var buttonId = "#cat" + buttonNumber;
-        $(buttonId).on("click", function () {
-            $(this).removeClass("btn-secondary btn-success btn-danger");
-
-            if (cat == buttonNumber) {
-                var url = "quests.php?per=" + quest + "&cat=" + buttonNumber;
-                window.open(url, "_self");
-                $(this).addClass("btn-secondary");
-            } else if (cat > buttonNumber) {
-                $(this).addClass("btn-success");
+            if (cat == i) {
+                $(buttonId).removeClass("btn-secondary btn-success btn-danger").addClass("btn-secondary");
+            } else if (cat > i) {
+                $(buttonId).removeClass("btn-secondary btn-success btn-danger").addClass("btn-success");
             } else {
-                $(this).addClass("btn-danger");
+                $(buttonId).removeClass("btn-secondary btn-success btn-danger").addClass("btn-danger");
             }
+
+            createButtonClickHandler(i);
+        };
+
+        function createButtonClickHandler(buttonNumber) {
+            var buttonId = "#cat" + buttonNumber;
+
+            $(buttonId).on("click", function() {
+                if (cat == buttonNumber) {
+                    var url = "quests.php?per=" + quest + "&cat=" + buttonNumber;
+                    window.open(url, "_self");
+                }
+            });
+        }
+
+        function next() {
+            var url = "quests.php?per=" + quest + "&cat=" + cat;
+            window.open(url, "_self");
+        }
+
+        $("#voltar").on("click", function() {
+            window.open("menu.php", "_self");
         });
-    }
-
-    function next() {
-        var url = "quests.php?per=" + quest + "&cat=" + cat;
-        window.open(url, "_self");
-    }
-
-    $("#voltar").on("click", function () {
-        window.open("menu.php", "_self");
-    });
 </script>
+
 </body>
 </html>

@@ -171,7 +171,7 @@
         
         //atravez da entrada da id do usuario, te retorna a id do questionario que atualmente esta sendo repondido
         public function searchcurrentidquests($userid) {
-            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
+            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 7");
             $stmt->execute([':user' => $userid]);
             $ver = $stmt->fetchColumn();
             return $ver;
