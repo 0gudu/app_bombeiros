@@ -13,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>"Todas"</title>
     <link rel="stylesheet" href="../css/quests.css">
+    <link rel="stylesheet" href="../../assets/static/css/bootstrap.min.css">
+    <script src="../../assets/static/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -34,6 +36,7 @@
     var cat_prox = cat + 1;
     var quest = <?php echo $per; ?>;
     var respostas_json = '<?php echo $ans;?>';
+    var inputCount = $('#pergunta input').length;
 
     if (respostas_json !== '0') {
         respostas = JSON.parse(respostas_json);
@@ -44,6 +47,8 @@
             $("#perg" + perg).val(respostas[perg].value);
         }
     }
+
+    
 
     
     $("#voltar").on("click", function () {
@@ -60,34 +65,35 @@
     });
 
     function prox() {
-    var answ = $('#pergunta').serializeArray();
-    var answers = JSON.stringify(answ);
-    //console.log(answ);
-    
-    var data = {
-        cat: cat,
-        quest: quest,
-        answers: answers
-    };
-    
-    $.ajax({
-        type: "POST",
-        url: "callfunc/svvquest.php",
+        var answ = $('#pergunta').serializeArray();
+        var answers = JSON.stringify(answ);
+        //console.log(answ);
 
-        data: data,
-        success: function(response) {
-            var url = "quests.php?per=" + per_prox + "&cat=" + cat;
-            console.log(response);
+        var data = {
+            cat: cat,
+            quest: quest,
+            answers: answers,
+            inputnum: inputCount
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "callfunc/svvquest.php",
 
-            
-            window.open(url, "_self");
-        },
-        error: function(xhr, status, error) {
-            console.error("An error occurred: " + error);
-        }
-    });
+            data: data,
+            success: function(response) {
+                var url = "quests.php?per=" + per_prox + "&cat=" + cat;
+                console.log(response);
 
-}
+                
+                //window.open(url, "_self");
+            },
+            error: function(xhr, status, error) {
+                console.error("An error occurred: " + error);
+            }
+        });
+
+    }
 
 
     function ant() {
