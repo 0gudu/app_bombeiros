@@ -112,7 +112,7 @@
         public function sttquest($userid, $stt) {
             try {
                 if ($stt == "status_cat"){
-                    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM quests WHERE user_quests = :user AND ong_cat != 7");
                     $stmt->execute([':user' => $userid]);
                     $ver = $stmt->fetchColumn();
                     if ($ver == 0){
@@ -120,22 +120,20 @@
                         $stmt->execute();
                         return 1;
                     } else {
-                        $stmt = $this->pdo->prepare("SELECT ong_cat FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                        $stmt = $this->pdo->prepare("SELECT ong_cat FROM quests WHERE user_quests = :user AND ong_cat != 7");
                         $stmt->execute([':user' => $userid]);
                         $ver = $stmt->fetchColumn();
                         return $ver;
                     }
                 }else if($stt == "status_quest") {
-                    $stmt = $this->pdo->prepare("SELECT ong_quests FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                    $stmt = $this->pdo->prepare("SELECT ong_quests FROM quests WHERE user_quests = :user AND ong_cat != 7");
                     $stmt->execute([':user' => $userid]);
                     $ver = $stmt->fetchColumn();
                     return $ver;
                 }else if($stt == "update_cat"){
-                    $stmt = $this->pdo->prepare("SELECT ong_cat FROM quests WHERE user_quests = :user AND ong_cat != 5");
-                    $stmt->execute([':user' => $userid]);
-                    $ver = $stmt->fetchColumn();
+                    $ver = $this->searchcurrentidquests($userid);
                     $update = $ver + 1;
-                    $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = $update WHERE user_quests = :user AND status_cat != 5");
+                    $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = $update WHERE user_quests = :user AND status_cat != 7");
                     $stmt->execute([':user' => $userid]);
                 }
             } catch (Exception $e) {
@@ -146,9 +144,7 @@
         //função responsavel por salvar a resposta das questões no momento em que o cara ir pra prox quest
         public function svquests($userid, $cat, $quest, $anw) {   
             try {
-                $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
-                $stmt->execute([':user' => $userid]);
-                $idquest = $stmt->fetchColumn();
+                $idquest = $this->searchcurrentidquests($userid);
             
                 $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM answers WHERE id_user = :userid AND id_quests = :idquests AND cat = :cat AND quest = :quest"); 
                 $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
@@ -178,15 +174,18 @@
         }
 
         public function proxcat($userid, $cat) {
-            $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = :cat WHERE user_quests = :user AND ong_cat != 5");
+            $idquest = $this->searchcurrentidquests($userid);
+            $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = :cat WHERE user_quests = :user AND ong_cat != 7");
             $stmt->execute([':user' => $userid, ':cat' => $cat]);
+
+            $stmt = $this->pdo->prepare("UPDATE quests SET ong_quests = 0 WHERE id_quest = :idquest");
+            $stmt->execute([':idquest' => $idquest]);
+            $idquest = $stmt->fetchColumn();
         }
 
         public function updateongquest($userid, $quest) {
             try {
-                $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
-                $stmt->execute([':user' => $userid]);
-                $idquest = $stmt->fetchColumn();
+                $idquest = $this->searchcurrentidquests($userid);
 
                 $stmt = $this->pdo->prepare("UPDATE quests SET ong_quests = $quest WHERE id_quest = :idquest");
                 $stmt->execute([':idquest' => $idquest]);
@@ -198,7 +197,7 @@
         }
         
     }
-
+    
     //class resposavel por escrever as coisas na tela em sua maioria
     class Desenhar {
         private $dados;

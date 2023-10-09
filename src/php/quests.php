@@ -86,7 +86,7 @@
                 console.log(response);
 
                 
-                //window.open(url, "_self");
+                window.open(url, "_self");
             },
             error: function(xhr, status, error) {
                 console.error("An error occurred: " + error);
