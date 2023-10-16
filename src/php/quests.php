@@ -101,7 +101,9 @@
         window.open(url,"_self");
     }
     function proxcat() {
-        url = "callfunc/proxcat.php?user="+user+"&cat="+cat_prox;
+        var answ = $('#pergunta').serializeArray();
+        var answers = JSON.stringify(answ);
+        url = "callfunc/proxcat.php?cat="+cat+"&quest="+quest+"&answers="+answers+"&inputnum="+inputCount;
         window.open(url,"_self");
     }
 
