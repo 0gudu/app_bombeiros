@@ -40,8 +40,11 @@ usort($q, function ($a, $b) {
 });
 print_r($q);
 
+$catp = $cat + 1;
 $q = json_encode($q);
 $db->svquests("$user", "$cat", "$quest", "$q");
-$db->updateongquest($user, $prox);
+
+
+$db->proxcat($user, $catp);
 header("Location: ../ocorrencia.php");
 ?>

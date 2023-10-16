@@ -173,6 +173,7 @@
             return $ver;
         }
 
+        //passa a categoria para a categoria seguinte e reseta o numero de ong_quests
         public function proxcat($userid, $cat) {
             $idquest = $this->searchcurrentidquests($userid);
             $stmt = $this->pdo->prepare("UPDATE quests SET ong_cat = :cat WHERE user_quests = :user AND ong_cat != 7");
@@ -183,6 +184,7 @@
             $idquest = $stmt->fetchColumn();
         }
 
+        //atualiza ong_quests para salvar a questão que ja foi respondida e continua da tal
         public function updateongquest($userid, $quest) {
             try {
                 $idquest = $this->searchcurrentidquests($userid);
@@ -195,6 +197,8 @@
             }      
             
         }
+
+
         
     }
     
@@ -324,6 +328,20 @@
                 echo 'Caught exception: ',  $e->getMessage(), "\n";
             }
         }
+
+        //lista as ocorrencias enviadas de acordo com o usuario
+        public function listocc($userid){
+            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE id_user = :user AND ong_cat = 7");
+            $stmt->execute([':user' => $userid]);
+            $lista = $stmt->fetchColumn();
+
+            return $lista;
+        }
+
+        public function listacc($userid) {
+
+        }
+
     }
     
     $draw = new Desenhar();
