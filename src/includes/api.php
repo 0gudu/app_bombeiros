@@ -274,7 +274,10 @@
                         };
                     }
                 } else {
-                    echo "<select name='perg0' id='sim' value='a'>";
+
+                    echo "erro na sintaxe, verifique novamente o documento $pers";
+                    //SELECT NAO ULTILIZADO
+                    /*echo "<select name='perg0' id='sim' value='a'>";
                     
                     for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
                         $optionValue = $this->perguntas[0][$num][$desc + 3];
@@ -282,6 +285,7 @@
                     };
         
                     echo "</select>";
+                    */
                 };
         
         
