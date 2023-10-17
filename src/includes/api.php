@@ -182,6 +182,7 @@
             $stmt = $this->pdo->prepare("UPDATE quests SET ong_quests = 0 WHERE id_quest = :idquest");
             $stmt->execute([':idquest' => $idquest]);
             $idquest = $stmt->fetchColumn();
+            //header("Location: ../ocorrencia.php");  
         }
 
         //atualiza ong_quests para salvar a questão que ja foi respondida e continua da tal
@@ -244,8 +245,8 @@
                             $extra++;
                             $input--;
                         }elseif ($firstcarc == "$"){
-                            echo "<span> <input type='checkbox' name='perg".$input."' id='penis$desc' value=''>
-                            <label for='penis$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
+                            echo "<span> <input type='checkbox' name='perg".$input."' id='input$desc' value=''>
+                            <label for='input$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
                         }else
                             echo "<input type='text' id='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' name='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' value=''>";
                             $input++;
@@ -261,15 +262,15 @@
                         $caracs = substr($caracs, 1);
                         if ($firstcarc == "&") {
                             
-                            echo "<p> $caracs <p>";
+                            echo "<p> $caracs </p>";
                             $extra++;
                         }else if ($firstcarc == "%") {
                             echo "<br>";
                             $extra++;
                         }else {
                     
-                        echo "<span> <input type='checkbox' name='perg".$desc."' id='penis$desc' value=''>
-                        <label for='penis$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
+                        echo "<span> <input type='checkbox' name='perg".$desc."' id='input$desc' value=''>
+                        <label for='input$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
                         };
                     }
                 } else {
@@ -331,15 +332,25 @@
 
         //lista as ocorrencias enviadas de acordo com o usuario
         public function listocc($userid){
-            $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE id_user = :user AND ong_cat = 7");
+            $stmt = $this->pdo->prepare("SELECT * FROM quests WHERE id_user = :user AND ong_cat = 7");
             $stmt->execute([':user' => $userid]);
-            $lista = $stmt->fetchColumn();
 
-            return $lista;
+            while( $linhas = $stmt->fetch()) 
+            {
+                $m = $linhas["id_coisa"]; 
+                $n = $linhas["item"];
+            }
         }
 
-        public function listacc($userid) {
-
+        //listar as contas de usuario
+        public function listaacc($userid) {
+            $stmt = $this->pdo->prepare("SELECT * FROM quests WHERE id_user = :user AND ong_cat = 7");
+            $stmt->execute([':user' => $userid]);
+            while( $linhas = $stmt->fetch()) 
+            {
+                $m = $linhas["id_coisa"]; //nome da coluna xampp
+                $n = $linhas["item"];
+            }
         }
 
     }

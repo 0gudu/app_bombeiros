@@ -38,7 +38,7 @@ foreach ($valoresAusentes as $valorAusente) {
 usort($q, function ($a, $b) {
     return strnatcmp($a->name, $b->name);
 });
-print_r($q);
+//print_r($q);
 
 $catp = $cat + 1;
 $q = json_encode($q);

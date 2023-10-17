@@ -1,1 +1,57 @@
-[[["Objetos recolhidos","escreve",1," "]]]
+[
+    [
+       [
+          "Forma de condução",
+          "check",
+          3,
+          "Deitada",
+          "Semi-sentada",
+          "Sentada"
+       ],
+       [
+          "Vítima era",
+          "check",
+          10,
+          "Ciclista",
+          "Condutor moto",
+          "gestante",
+          "Pass ban frente",
+          "Pass moto",
+          "Condutor-carro",
+          "Clinico",
+          "Trauma",
+          "Pass bco trás",
+          "Pedestre"
+       ],
+       [
+          "Decisão de transporte",
+          "check",
+          4,
+          "&☹️",
+          "Crítico",
+          "&🥴",
+          "instável",
+          "&😐",
+          "Potencialmente Instável",
+          "&🙂",
+          "Estável"
+
+       ],
+       [
+          "Equipe de atendimento",
+          "escreve",
+          5,
+          "M",
+          "S1",
+          "S2",
+          "S3",
+          "Demante"
+       ],
+       [
+          "Objetos recolhidos",
+          "escreve",
+          1,
+          ""
+       ]
+    ]
+ ]
