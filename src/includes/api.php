@@ -1,6 +1,7 @@
 <?php
     session_start();
-    
+    date_default_timezone_set('America/Sao_Paulo');
+
     //class referente as funções que alteram algo no banco de dados
     class db {
 
@@ -116,7 +117,8 @@
                     $stmt->execute([':user' => $userid]);
                     $ver = $stmt->fetchColumn();
                     if ($ver == 0){
-                        $stmt = $this->pdo->prepare("INSERT INTO quests (user_quests, ong_cat, ong_quests) VALUES ($userid,1,0)");
+                        $date = date('Y-m-d H:i:s');
+                        $stmt = $this->pdo->prepare("INSERT INTO quests (user_quests, ong_cat, ong_quests, date_quest) VALUES ($userid,1,0,'$date')");
                         $stmt->execute();
                         return 1;
                     } else {
@@ -137,7 +139,7 @@
                     $stmt->execute([':user' => $userid]);
                 }
             } catch (Exception $e) {
-                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                return $e->getMessage();
             }
         }
 
@@ -339,10 +341,13 @@
             $stmt = $this->pdo->prepare("SELECT * FROM quests WHERE id_user = :user AND ong_cat = 7");
             $stmt->execute([':user' => $userid]);
 
+            $id = 0;
             while( $linhas = $stmt->fetch()) 
             {
-                $m = $linhas["id_coisa"]; 
-                $n = $linhas["item"];
+
+                $data = $linhas["date_quest"]; 
+
+                echo '<div id="cart$'.$id.'" class="container"><h2>'.$data.'</h2></div>'
             }
         }
 
