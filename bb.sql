@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Oct 16, 2023 at 08:17 PM
--- Server version: 8.0.31
--- PHP Version: 8.0.26
+-- Host: 127.0.0.1
+-- Tempo de geração: 18-Out-2023 às 15:47
+-- Versão do servidor: 10.4.28-MariaDB
+-- versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,69 +18,54 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bb`
+-- Banco de dados: `bb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `answers`
+-- Estrutura da tabela `answers`
 --
 
-DROP TABLE IF EXISTS `answers`;
-CREATE TABLE IF NOT EXISTS `answers` (
-  `id_answer` int NOT NULL AUTO_INCREMENT,
-  `id_user` int NOT NULL,
-  `id_quests` int NOT NULL,
-  `cat` int NOT NULL,
-  `quest` int NOT NULL,
-  `answer` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id_answer`),
-  KEY `id_user` (`id_user`),
-  KEY `id_quests` (`id_quests`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `answers` (
+  `id_answer` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_quests` int(11) NOT NULL,
+  `cat` int(11) NOT NULL,
+  `quest` int(11) NOT NULL,
+  `answer` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quests`
+-- Estrutura da tabela `quests`
 --
 
-DROP TABLE IF EXISTS `quests`;
-CREATE TABLE IF NOT EXISTS `quests` (
-  `id_quest` int NOT NULL AUTO_INCREMENT,
-  `user_quests` int NOT NULL,
-  `ong_cat` int NOT NULL,
-  `ong_quests` int NOT NULL,
-  PRIMARY KEY (`id_quest`),
-  KEY `user` (`user_quests`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `quests`
---
-
-INSERT INTO `quests` (`id_quest`, `user_quests`, `ong_cat`, `ong_quests`) VALUES
-(3, 1, 1, 0);
+CREATE TABLE `quests` (
+  `id_quest` int(11) NOT NULL,
+  `user_quests` int(11) NOT NULL,
+  `ong_cat` int(11) NOT NULL,
+  `ong_quests` int(11) NOT NULL,
+  `date_quest` varchar(53) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estrutura da tabela `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id_user` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `senha` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `telefone` int NOT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `usuarios` (
+  `id_user` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `senha` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `telefone` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `usuarios`
+-- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_user`, `nome`, `senha`, `email`, `telefone`) VALUES
@@ -95,11 +80,58 @@ INSERT INTO `usuarios` (`id_user`, `nome`, `senha`, `email`, `telefone`) VALUES
 (17, 'sssss', 'ssssssssss', 'ssssssss', 12);
 
 --
--- Constraints for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Constraints for table `answers`
+-- Índices para tabela `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id_answer`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_quests` (`id_quests`);
+
+--
+-- Índices para tabela `quests`
+--
+ALTER TABLE `quests`
+  ADD PRIMARY KEY (`id_quest`),
+  ADD KEY `user` (`user_quests`);
+
+--
+-- Índices para tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id_answer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+
+--
+-- AUTO_INCREMENT de tabela `quests`
+--
+ALTER TABLE `quests`
+  MODIFY `id_quest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `answers`
 --
 ALTER TABLE `answers`
   ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `usuarios` (`id_user`),

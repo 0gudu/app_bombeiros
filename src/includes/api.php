@@ -99,6 +99,10 @@
             }
         }
         
+        public function exitacc() {
+            session_destroy();
+
+        }
         //função velha com um erro que n tenho cerebro pra resolver, ams na teoria era para n ter que ficar logando se o cara já logou
         public function autologin() {
             if(isset($_SESSION['user'])) {
@@ -338,18 +342,25 @@
 
         //lista as ocorrencias enviadas de acordo com o usuario
         public function listocc($userid){
-            $stmt = $this->pdo->prepare("SELECT * FROM quests WHERE id_user = :user AND ong_cat = 7");
-            $stmt->execute([':user' => $userid]);
-
-            $id = 0;
-            while( $linhas = $stmt->fetch()) 
-            {
-
-                $data = $linhas["date_quest"]; 
-
-                echo '<div id="cart$'.$id.'" class="container"><h2>'.$data.'</h2></div>'
-            }
+            try {
+                $stmt = $this->pdo->prepare("SELECT * FROM quests WHERE user_quests = :user AND ong_cat = 7");
+                $stmt->execute([':user' => $userid]);
+                
+                $id = 0;
+                while ($linhas = $stmt->fetch()) {
+                    $data = $linhas["date_quest"]; 
+                    $idquestt = $linhas['id_quest'];
+                    
+                    echo "<div id='cart{$id}' onclick='openanwsers({$id}, {$idquestt})' class='container'><h2>{$data}</h2></div>";
+ 
+                    
+                    $id++;
+                }
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }    
         }
+        
 
         //listar as contas de usuario
         public function listaacc($userid) {

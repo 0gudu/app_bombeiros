@@ -16,8 +16,8 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="../php/menu.php">Menu Principal</a>
               <a class="nav-link" href="../php/ocorrencia.php">Continuar/Novo Questionario</a>
-              <a class="nav-link" href="../php/ocorrencia.php">Listar Ocorrencias</a>
-              <a class="nav-link" href="../php/ocorrencia.php">Editar Perfil</a>
+              <a class="nav-link" href="../php/listoc.php">Listar Ocorrencias</a>
+              <a class="nav-link" href="../php/editarperfil.php">Editar Perfil</a>
               <a class="nav-link" href="../php/callfunc/sair.php">Sair</a>
             </div>
           </div>
