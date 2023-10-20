@@ -8,6 +8,7 @@ body {
     
     justify-items: center;
     align-items: center;
+    align-items: center;
     align-content: center;
     margin: 0px;
 }
@@ -43,4 +44,5 @@ body {
     width: 90%;
     height: 80%;
     overflow-y: auto;
+    font-size: larger;
 }

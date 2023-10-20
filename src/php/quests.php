@@ -19,9 +19,9 @@
 <body>
 
     <form id="pergunta">
-        <?php
-            $draw->exibirPerguntas($per,"../json/perguntas$cat.json");
-        ?>
+            <?php
+                $draw->exibirPerguntas($per,"../json/perguntas$cat.json");
+            ?>    
     </form>
     
     <button id="voltar">Voltar</button>

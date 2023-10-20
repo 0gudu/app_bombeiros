@@ -351,7 +351,7 @@
                     $data = $linhas["date_quest"]; 
                     $idquestt = $linhas['id_quest'];
                     
-                    echo "<div id='cart{$id}' onclick='openanwsers({$id}, {$idquestt})' class='container'><h2>{$data}</h2></div>";
+                    echo "<div id='cart{$id}' class='bg-danger p-4 border' onclick='openanwsers({$id}, {$idquestt})' class='container'><h2>{$data}</h2></div>";
  
                     
                     $id++;

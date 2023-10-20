@@ -16,9 +16,17 @@ $db->checklogin();
     <?php 
         include("../includes/header.php")
     ?>
-    <?php 
-        $draw->listocc($_SESSION['user']);
-    ?>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <?php 
+                $draw->listocc($_SESSION['user']);
+            ?>
+        </div>
+    </div>
+</div>
+
+    
     <div class="modal" id="overlayModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
