@@ -18,7 +18,7 @@
 </head>
 <body>
     <?php 
-    include("../includes/header.php")
+    include("../includes/header.php");
     ?>
     <button class="btn btn-secondary" id="cat1">categoria 1 title</button>
     <button class="btn btn-secondary" id="cat2">categoria 2 title</button>

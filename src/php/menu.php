@@ -15,7 +15,7 @@
 </head>
 <body>
     <?php 
-        include "../includes/header.php"
+        include "../includes/header.php";
     ?>
     <div class="body">
     <h5> Bem Vindo <?php echo $db->idtoname($_SESSION['user']);?>!</h5>

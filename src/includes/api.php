@@ -16,11 +16,12 @@
         }
 
         //função responsavel por cadastrar o usuario
-        public function cadastrouser($nome, $senha, $email, $telefone){
+        public function cadastrouser($nome, $cargo, $senha, $email, $telefone){
             try {
-                $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, senha, email, telefone) VALUES (:nome, :senha, :email, :telefone)");
+                $stmt = $this->pdo->prepare("INSERT INTO usuarios (nome, cargo, senha, email, telefone) VALUES (:nome, :cargo, :senha, :email, :telefone)");
                 $result = $stmt->execute([
                     ':nome' => $nome,
+                    ':cargo' => $cargo,
                     ':senha' => $senha,
                     ':email' => $email,
                     ':telefone' => $telefone
@@ -55,7 +56,7 @@
         public function login($nome, $senha ) {
             try {
                 $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE nome = :nome AND senha = :senha"); 
-                $stmt->execute([':nome' => $nome, ':senha' => $senha]);
+                $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
                 $ver = $stmt->fetchColumn();
 
                 if ($ver == 0) {
@@ -64,7 +65,7 @@
                     echo "true";
 
                     $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
-                    $stmt->execute([':nome' => $nome, ':senha' => $senha]);
+                    $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
                     $ver = $stmt->fetchColumn();
 
                     $_SESSION['user'] = $ver;
@@ -99,6 +100,7 @@
             }
         }
         
+        //sai da conta
         public function exitacc() {
             session_destroy();
 
@@ -253,6 +255,7 @@
                         }elseif ($firstcarc == "$"){
                             echo "<span> <input type='checkbox' name='perg".$input."' id='input$desc' value=''>
                             <label for='input$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
+                            $input++;
                         }else
                             echo "<input type='text' id='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' name='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' value=''>";
                             $input++;

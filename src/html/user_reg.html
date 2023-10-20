@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="../css/admusers.css">
 </head>
 <body>
-    <form action="" method="POST" id="form">
+    <form action="" id="form">
         Nome
         <input type="text" id="nome" name="nome" value="">
+        Cargo
+        <input type="text" id="cargo" name="cargo" value="">
         Senha
         <input type="text" id="senha" name="senha" value="">
         Email
@@ -25,7 +27,7 @@
         
     </div>
 </body>
-<script src="../jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script>
     $("#butao").click(function() {
         var dados = $('#form').serialize();
@@ -33,12 +35,12 @@
 
         $.ajax({
 				type: "POST",
-                url: "inserir.php",
+                url: "../php/callfunc/inserir.php",
 				data: dados,
 				                
                 success: function(success)
 				{
-					
+					$("input").val("");
 				},
 				
 			});

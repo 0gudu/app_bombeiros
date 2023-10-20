@@ -55,6 +55,34 @@
           "Polícia Militar",
           "PRE",
           "PRF"
+       ],
+       [
+         "Materiais utilizados descartados (Quant.)",
+         "escreve",
+         23,
+         "Ataduras",
+         "Cateter tp.oculos",
+         "Compressa comum",
+         "Kit's",
+         "Luvas desc.(pares)",
+         "Máscara desc.",
+         "Manta aluminizada",
+         "Pás do dea",
+         "Sonda de aspiração",
+         "Soro fisiológico",
+         "Talas pap.",
+         "outro",
+         "&Materiais utilizados deixados no hospital",
+         "Base do estabiliza.",
+         "Colar",
+         "Coxins estabiliza.",
+         "KED",
+         "Maca rigida",
+         "T.T.F",
+         "Tirante aranha",
+         "Tirante de cabeça",
+         "Cânula",
+         "outro"
        ]
     ]
  ]
