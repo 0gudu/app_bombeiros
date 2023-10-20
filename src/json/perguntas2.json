@@ -69,6 +69,24 @@
         "Ausência(paralisia flácida, hipotonia"
        ],
        [
+         "Sinais Vitais",
+         "escreve",
+         12,
+         "Pressão arterial(mmHg)",
+         "Pulso(B.C.M.P)",
+         "Respiração(M.R.M)",
+         "Saturação(%)",
+         "Temperatura(°C)",
+         "&Perfusão:",
+         "$>2SEG",
+         "$<2SEG",
+         "HGT",
+         "%",
+         "$Anormal",
+         "$Normal"
+       ]
+       ,
+       [
         "Problemas encontrador suspeitos",
         "check",
         18,
