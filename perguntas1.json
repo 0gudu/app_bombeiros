@@ -57,8 +57,12 @@
           "idade do acompanhante"
        ],
        [
-          "Qual o local da ocorrência"
-       ],
+          "Qual o local da ocorrência",
+          "escreve",
+          1,
+          "local da ocorrência"
+       ],  
+       
        [
           "Qual o N°USB?",
           "escreve",
