@@ -1,6 +1,72 @@
 [
     [
-       [
+      ["Anamnese da emergência médica",
+       "escreve",      
+       22,
+       "O que aconteceu (sinais e sintomas)",
+       "&Aconteceu outras vezes",
+       "$sim",
+       "$nao",
+       "A quanto tempo isso aconteceu?",
+       "&Possui algum problema de saude?",
+       "$sim",
+       "$nao",
+       "Quais?",
+       "&Faz uso de medicação?",
+       "$sim",
+       "$nao",
+       "Horário da última medicação",
+       "Quais?",
+       "Alérgico a alguma coisa?",
+       "$sim",
+       "$nao",
+       "Se sim, especifique:",
+       "&Ingeriu alimento ou líquido ≥6 horas:",
+       "$sim",
+       "$nao",
+       "que horas"
+       
+      ]
+      , 
+      [
+         "Anamnese gestacional",
+         "escreve",
+         32,
+         "Período da gestação",
+         "&Fez pré-natal?",
+         "$sim",
+         "$nao",
+         "Nome do médico",
+         "&Existe possibilidade de complicações?",
+         "$sim",
+         "$nao",
+         "&É o primeiro filho?",
+         "$sim",
+         "$nao",
+         "Quantos?",
+         "Que horas iniciaram as contrações",
+         "Tempo das contrações",
+         "Intervalo",
+         "&Sente pressão no quadril ou vontade de evacuar",
+         "$sim",
+         "$nao",
+         "&Já houve ruptura da bolsa?",
+         "$sim",
+         "$nao",
+         "Foi feito inspeção visual?",
+         "$sim",
+         "$nao",
+         "Parto realizado?",
+         "$sim",
+         "$nao",
+         "Bebê é do sexo masc.?",
+         "$sim",
+         "$nao",
+         "Hora do nascimento",
+         "Nome do bebê"
+      ]
+      ,
+      [
           "Avaliação da cinemática",
           "check",
           14,
@@ -25,6 +91,15 @@
           "&Volante torcido",
           "Sim",
           "Não"
+       ]
+       ,
+       [
+         "Divulgar p/impressão",
+         "check",
+         3,
+         "& ",
+         "Sim",
+         "Não"
        ]
     ]
  ]
