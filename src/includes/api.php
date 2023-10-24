@@ -4,14 +4,14 @@
 
     //class referente as funções que alteram algo no banco de dados
     class db {
-
+        
         //no momento em que a class é criada, o codigo de conexão com o banco de dados é rodado
         public function __construct() {
             try {
-                $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
+                $this->pdo = new PDO('mysql:dbname=' . $dbname . ';host=' . $host . ';charset=utf8', $user, $password);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }catch (Exception $e) {
-                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            } catch (PDOException $e) {
+                echo 'Caught exception: ' . $e->getMessage();
             }
         }
 
@@ -218,13 +218,11 @@
         //conecta no banco de dados
         public function __construct() {
             try {
-                $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8", "root", "");
+                $this->pdo = new PDO('mysql:dbname=' . $dbname . ';host=' . $host . ';charset=utf8', $user, $password);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (Exception $e) {
-                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            } catch (PDOException $e) {
+                echo 'Caught exception: ' . $e->getMessage();
             }
-            
-            
         }
 
         //exibe as perguntas de acordo com o arquivo json e o numero da pergunta
