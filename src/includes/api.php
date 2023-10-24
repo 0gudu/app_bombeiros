@@ -4,16 +4,27 @@
 
     //class referente as funções que alteram algo no banco de dados
     class db {
-        
-        //no momento em que a class é criada, o codigo de conexão com o banco de dados é rodado
-        public function __construct() {
+
+        //função para se conectar ao banco de dados de acordo com as variavel setadas no arquivo config.php
+        public function includevaluesdb($host,$dbname,$user,$password) {
             try {
-                $this->pdo = new PDO('mysql:dbname=' . $dbname . ';host=' . $host . ';charset=utf8', $user, $password);
+            
+                $this->pdo = new PDO("mysql:dbname=".$dbname.";host=".$host.";charset=utf8","".$user."","".$password."");
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 echo 'Caught exception: ' . $e->getMessage();
             }
+            
         }
+        //no momento em que a class é criada, o codigo de conexão com o banco de dados é rodado
+        /*public function __construct() {
+            try {
+                $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8","root","");
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo 'Caught exception: ' . $e->getMessage();
+            }
+        }*/
 
         //função responsavel por cadastrar o usuario
         public function cadastrouser($nome, $cargo, $senha, $email, $telefone){
@@ -26,6 +37,7 @@
                     ':email' => $email,
                     ':telefone' => $telefone
                 ]);
+                echo "informações inseridas";
             } catch (Exception $e) {
                 echo 'Caught custom exception: ',  $e->getMessage(), "\n";
             }
@@ -205,18 +217,27 @@
                 echo 'Caught exception: ',  $e->getMessage(), "\n";
             }      
             
-        }
-
-
-        
+        }        
     }
     
     //class resposavel por escrever as coisas na tela em sua maioria
     class Desenhar {
         private $dados;
         private $perguntas;
+
+        /*
         //conecta no banco de dados
         public function __construct() {
+            try {
+                $this->pdo = new PDO("mysql:dbname=bb;host=localhost;charset=utf8","root","");
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo 'Caught exception: ' . $e->getMessage();
+            }
+        }*/
+
+        //função antiga para se conectar ao banco de dados de acordo com as variavel setadas no arquivo config.php
+        public function includevaluesdb($host,$dbname,$user,$password) {
             try {
                 $this->pdo = new PDO('mysql:dbname=' . $dbname . ';host=' . $host . ';charset=utf8', $user, $password);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -352,7 +373,8 @@
                     $data = $linhas["date_quest"]; 
                     $idquestt = $linhas['id_quest'];
                     
-                    echo "<div id='cart{$id}' class='bg-danger p-4 border' onclick='openanwsers({$id}, {$idquestt})' class='container'><h2>{$data}</h2></div>";
+                    
+                    echo "<div id='cart{$id}' class='cursor-pointer bg-danger p-4 border' onclick='openanwsers({$id}, {$idquestt})' class='container'><h2>{$data}</h2></div>";
  
                     
                     $id++;
@@ -374,8 +396,36 @@
             }
         }
 
+        public function listanswer($idquest) {
+            $stmt = $this->pdo->prepare("SELECT * FROM answers WHERE id_quest = :idquest ");
+            $stmt->execute([':idquest' => $idquest]);
+            while( $linhas = $stmt->fetch()) 
+            {
+                $cat = $linhas["cat"]; //nome da coluna xampp
+                $answers = $linhas["answer"];
+
+                switch ($cat) {
+                    case 1:
+                        
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    
+                }
+            }
+        }
+
     }
     
     $draw = new Desenhar();
     $db = new db();
+    include "config.php";
 ?>
