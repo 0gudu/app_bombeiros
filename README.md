@@ -1,6 +1,6 @@
 # Aplicativo de Registro de Ações dos Bombeiros NOAR
-![noar_big_logo](https://github.com/0gudu/app_bombeiros/assets/89671108/85f15c19-ee22-4f18-9c3b-afe518bbd95f)
 
+![noar_small_logo](https://github.com/0gudu/app_bombeiros/assets/89671108/2a79c96b-1437-4e8f-b2b1-3c3e472e2d24)
 
 ## Visão Geral
 
