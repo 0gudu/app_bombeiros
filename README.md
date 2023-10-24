@@ -95,5 +95,5 @@ Este projeto é licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICE
 
 ## Contato
 
-Para mais informações ou suporte, entre em contato conosco em [seu-email@example.com](mailto:seu-email@example.com).
+Para mais informações ou suporte, entre em contato conosco em [seu-email@example.com](mailto:gustavojosepaulo@gmail.com).
 
