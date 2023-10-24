@@ -40,7 +40,7 @@ $db->checklogin();
 <script src="../js/jquery.js"></script>
 <script>
     
-    function openanwsers(iddiv,idquest) {
+    function openanwsers(idquest) {
         $("#overlayModal").modal("show");
         $('.modal-body').text('ESSA AQUI SÃO AS RESPOSTAS DO QUESTIONARIO COM A ID='+idquest);
     }

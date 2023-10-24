@@ -2,7 +2,7 @@
     [
       ["Anamnese da emergência médica",
        "escreve",      
-       22,
+       18,
        "O que aconteceu (sinais e sintomas)",
        "&Aconteceu outras vezes",
        "$sim",
@@ -31,7 +31,7 @@
       [
          "Anamnese gestacional",
          "escreve",
-         32,
+         24,
          "Período da gestação",
          "&Fez pré-natal?",
          "$sim",
@@ -53,13 +53,13 @@
          "&Já houve ruptura da bolsa?",
          "$sim",
          "$nao",
-         "Foi feito inspeção visual?",
+         "&Foi feito inspeção visual?",
          "$sim",
          "$nao",
-         "Parto realizado?",
+         "&Parto realizado?",
          "$sim",
          "$nao",
-         "Bebê é do sexo masc.?",
+         "&Bebê é do sexo masc.?",
          "$sim",
          "$nao",
          "Hora do nascimento",
@@ -94,10 +94,9 @@
        ]
        ,
        [
-         "Divulgar p/impressão",
+         "Divulgar p/imprensa?",
          "check",
-         3,
-         "& ",
+         2,
          "Sim",
          "Não"
        ]
