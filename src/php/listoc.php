@@ -42,7 +42,24 @@ $db->checklogin();
     
     function openanwsers(idquest) {
         $("#overlayModal").modal("show");
-        $('.modal-body').text('ESSA AQUI SÃO AS RESPOSTAS DO QUESTIONARIO COM A ID='+idquest);
+        data = {
+            idquest: idquest
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "callfunc/answersoc.php",
+            dataType: 'json',
+
+            data: data,
+            success: function(response) {
+                $('.modal-body').text(response, '<br>');
+            },
+            error: function(xhr, status, error) {
+                console.error("An error occurred: " + error);
+            }
+        });
+        //$('.modal-body').text('ESSA AQUI SÃO AS RESPOSTAS DO QUESTIONARIO COM A ID='+idquest);
     }
 </script>
 </html>

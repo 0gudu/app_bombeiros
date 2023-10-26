@@ -273,7 +273,7 @@
                             $input--;
                         }elseif ($firstcarc == "$"){
                             echo "<span> <input type='checkbox' name='perg".$input."' id='input$desc' value=''>
-                            <label for='input$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
+                            <label for='input$desc'>" . $caracs . "</label></span>";
                             $input++;
                         }else
                             echo "<input type='text' id='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' name='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' value=''>";
@@ -397,30 +397,53 @@
         }
 
         public function listanswer($idquest) {
-            $stmt = $this->pdo->prepare("SELECT * FROM answers WHERE id_quest = :idquest ");
+            $stmt = $this->pdo->prepare("SELECT * FROM answers WHERE id_quests = :idquest ");
             $stmt->execute([':idquest' => $idquest]);
+            $cat1 = array();
+            $cat2 = array();
+            $cat3 = array();
+            $cat4 = array();
+            $cat5 = array();
+            $cat6 = array();
             while( $linhas = $stmt->fetch()) 
             {
-                $cat = $linhas["cat"]; //nome da coluna xampp
+                $cat = $linhas["cat"]; //nome da coluna
                 $answers = $linhas["answer"];
-
+                
                 switch ($cat) {
                     case 1:
-                        
+                        array_push($cat1, $answers);
                         break;
                     case 2:
+                        array_push($cat2, $answers);
                         break;
                     case 3:
+                        array_push($cat3, $answers);
                         break;
                     case 4:
+                        array_push($cat4, $answers);
                         break;
                     case 5:
+                        array_push($cat5, $answers);
                         break;
                     case 6:
+                        array_push($cat6, $answers);
                         break;
                     
                 }
-            }
+            };
+            $ans = array (
+                'cat1' => $cat1,
+                'cat2' => $cat2,
+                'cat3' => $cat3,
+                'cat4' => $cat4,
+                'cat5' => $cat5,
+                'cat6' => $cat6
+            );
+            $jsonans = json_encode($ans);
+
+            return $jsonans;
+                                                                                                                                                                                                        
         }
 
     }
