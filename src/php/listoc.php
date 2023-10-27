@@ -1,6 +1,6 @@
 <?php 
-require_once "../includes/api.php";
-$db->checklogin();
+    require_once "../includes/api.php";
+    $db->checklogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@ $db->checklogin();
 </head>
 <body>
     <?php 
-        include("../includes/header.php")
+        include("../includes/header.php");
     ?>
     <div class="container">
     <div class="row">
@@ -41,6 +41,7 @@ $db->checklogin();
 <script>
     
     function openanwsers(idquest) {
+        console.log(idquest);
         $("#overlayModal").modal("show");
         data = {
             idquest: idquest
@@ -54,6 +55,7 @@ $db->checklogin();
             data: data,
             success: function(response) {
                 $('.modal-body').text(response, '<br>');
+                console.log(response);
             },
             error: function(xhr, status, error) {
                 console.error("An error occurred: " + error);

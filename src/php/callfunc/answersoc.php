@@ -1,6 +1,6 @@
 <?php 
     require_once "../../includes/api.php";
-    $idquest = 9;
+    $idquest = $_POST['idquest'];
 
     header('Content-Type: application/json');
     
