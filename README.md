@@ -42,7 +42,7 @@ Siga as etapas abaixo para configurar e instalar o projeto em seu ambiente:
 
 4. **Configuração do PHP**:
 5. 
-   - Edite o arquivo `config.php` para incluir as informações de conexão com o banco de dados, como nome do banco de dados, usuário e senha.
+   - Edite o arquivo `config.php` 'em src/includes/' , para incluir as informações de conexão com o banco de dados, como nome do banco de dados, usuário e senha.
 
    Exemplo de configuração no arquivo `config.php`:
 
