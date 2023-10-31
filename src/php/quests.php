@@ -4,7 +4,7 @@
     $per = $_GET["per"];
     $cat = $_GET["cat"];
     $answers = $draw->loadquests($_SESSION['user'], $cat, $per);
-    $ans = json_encode($answers);
+	$ans = json_encode($answers);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -38,13 +38,22 @@
     var respostas_json = '<?php echo $ans;?>';
     var inputCount = $('#pergunta input').length;
 
+    
+    //carregar respostas já digitadas anteriormente
     if (respostas_json !== '0') {
         respostas = JSON.parse(respostas_json);
         console.log("a");
         num = Object.keys(respostas).length;
         console.log(num);
         for(var perg = 0; perg < num; perg++) {
-            $("#perg" + perg).val(respostas[perg].value);
+			console.log(respostas[perg]);
+			if (respostas[perg].value == '') {
+				console.log("deveria ter marcado");
+				$("#perg" + perg).prop("checked", true);
+			}else {
+				$("#perg" + perg).val(respostas[perg].value);
+			}
+           
         }
     }
 
@@ -65,34 +74,54 @@
     });
 
     function prox() {
-        var answ = $('#pergunta').serializeArray();
-        var answers = JSON.stringify(answ);
-        //console.log(answ);
+		//verifica se digitou nos campos de texto
+        var campos = document.querySelectorAll("input[type='text']");
+        var aviso = document.getElementById("aviso");
 
-        var data = {
-            cat: cat,
-            quest: quest,
-            answers: answers,
-            inputnum: inputCount
-        };
-        
-        $.ajax({
-            type: "POST",
-            url: "callfunc/svvquest.php",
+        var camposVazios = false;
 
-            data: data,
-            success: function(response) {
-                var url = "quests.php?per=" + per_prox + "&cat=" + cat;
-                console.log(response);
-
-                
-                window.open(url, "_self");
-            },
-            error: function(xhr, status, error) {
-                console.error("An error occurred: " + error);
+        for (var i = 0; i < campos.length; i++) {
+            if (campos[i].value === "") {
+                camposVazios = true;
+                break; // Sai do loop assim que um campo vazio for encontrado
             }
-        });
+        }
 
+        if (camposVazios) {
+            aviso.innerHTML = "Preencha todos os campos.";
+        } else {
+			//se digitou salva as informações certinho, serializa elas e manda pra db
+            var answ = $('#pergunta').serializeArray();
+            var answers = JSON.stringify(answ);
+            console.log(answ);
+
+            var data = {
+                cat: cat,
+                quest: quest,
+                answers: answers,
+                inputnum: inputCount
+            };
+                
+            $.ajax({
+                type: "POST",
+                url: "callfunc/svvquest.php",
+
+                data: data,
+                success: function(response) {
+                    var url = "quests.php?per=" + per_prox + "&cat=" + cat;
+                    console.log(response);
+
+                        
+                    window.open(url, "_self");
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred: " + error);
+                }
+            });
+ 
+            }
+
+        
     }
 
 

@@ -338,7 +338,7 @@
         //pega as respostas de acordo com a categoria e a questao enviada e a envia ao usuario em um formato de objeto json
         public function loadquests($userid, $cat, $quest) {
             try {
-                $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 5");
+                $stmt = $this->pdo->prepare("SELECT id_quest FROM quests WHERE user_quests = :user AND ong_cat != 7");
                 $stmt->execute([':user' => $userid]);
                 $idquest = $stmt->fetchColumn();
 
@@ -358,7 +358,7 @@
                     return 0;
                 }
             } catch (Exception $e) {
-                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                return $e->getMessage();
             }
         }
 
@@ -433,12 +433,12 @@
                 }
             };
             $ans = array (
-                'cat1' => $cat1,
-                'cat2' => $cat2,
-                'cat3' => $cat3,
-                'cat4' => $cat4,
-                'cat5' => $cat5,
-                'cat6' => $cat6
+                '1' => $cat1,
+                '2' => $cat2,
+                '3' => $cat3,
+                '4' => $cat4,
+                '5' => $cat5,
+                '6' => $cat6
             );
             $jsonans = json_encode($ans);
 
@@ -446,6 +446,19 @@
                                                                                                                                                                                                         
         }
 
+
+        public function juntarpergs() {
+            $dados1 = file_get_contents("../json/perguntas1.json");
+            $dados2 = file_get_contents("../json/perguntas2.json");
+            $dados3 = file_get_contents("../json/perguntas3.json");
+            $dados4 = file_get_contents("../json/perguntas4.json");
+            $dados5 = file_get_contents("../json/perguntas5.json");
+            $dados6 = file_get_contents("../json/perguntas6.json");
+
+            $cat1 = [];
+            $cat1[1] = json_decode($dados1);
+            echo $cat1;
+        }
     }
     
     $draw = new Desenhar();

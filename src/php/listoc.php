@@ -40,13 +40,21 @@
 <script src="../js/jquery.js"></script>
 <script>
     
+    //pega os json das perguntas
+    var jsonData;
+
+
+
+
+    //visualizar as questoes ja respondidas
     function openanwsers(idquest) {
         console.log(idquest);
+
         $("#overlayModal").modal("show");
         data = {
             idquest: idquest
         };
-
+        //ajax pra pegar as respostas do formulario clicado
         $.ajax({
             type: "POST",
             url: "callfunc/answersoc.php",
@@ -54,14 +62,39 @@
 
             data: data,
             success: function(response) {
-                $('.modal-body').text(response, '<br>');
                 console.log(response);
+                exibirModal(response); //aciona função para exibir as respostas certinho
             },
             error: function(xhr, status, error) {
                 console.error("An error occurred: " + error);
             }
         });
-        //$('.modal-body').text('ESSA AQUI SÃO AS RESPOSTAS DO QUESTIONARIO COM A ID='+idquest);
+
+        
+
+        //exibe as respostas certinho
+       function exibirModal(data) {
+            var $result = $(".modal-body"); // Seleciona a div com a classe modal-body
+
+                $.each(data, function(category, questions) {
+                    var categoryDiv = $("<div>").addClass("category").text("Categoria: " + category);
+                    $result.append(categoryDiv);
+
+                    $.each(questions, function(index, question) {
+                        var questionDiv = $("<div>").addClass("question"); // Cria uma div para cada conjunto de valores
+
+                        $.each(JSON.parse(question), function(key, value) {
+                            var fieldDiv = $("<div>").text("Campo: " + value.name);
+                            var valueDiv = $("<div>").text("Valor: " + value.value);
+                            questionDiv.append(fieldDiv, valueDiv);
+                        });
+
+                        $result.append(questionDiv); // Adiciona a div com os valores à div com a classe modal-body
+                    });
+                });
+       }
+        
+        
     }
 </script>
 </html>
