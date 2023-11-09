@@ -2,7 +2,8 @@ body {
 
     height: 95.6vh;
     display: flex;
-    justify-content: center;
+    flex-direction:row;
+    justify-content: space-around;
     justify-items: center;
     align-items: center;
     align-content: center;
@@ -10,11 +11,32 @@ body {
 
 form {
     display: flex;
-    width: 50%;
+    width: 20%;
     height: 50%;
     flex-direction: column;
     justify-content: space-around;
     justify-items: center;
     align-items: center;
-    align-content: center;
+    align-content: right;
+}
+
+#users {
+    width: 70%;
+    height: 100%;
+    border-left: 2px solid black;
+    overflow-y: scroll;
+}
+
+#user {
+    width: 90%;
+    height: 150px;
+    border: 2px solid black;
+    margin: 20px;
+    font-size: larger;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: right;
+    align-content: right;
 }
