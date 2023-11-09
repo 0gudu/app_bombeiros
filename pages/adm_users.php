@@ -1,3 +1,6 @@
+<?php 
+    require_once ''
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,9 +11,11 @@
     <link rel="stylesheet" href="../css/admusers.css">
 </head>
 <body>
-    <form action="" method="POST" id="form">
+    <form action="" id="form">
         Nome
         <input type="text" id="nome" name="nome" value="">
+        Cargo
+        <input type="text" id="cargo" name="cargo" value="">
         Senha
         <input type="text" id="senha" name="senha" value="">
         Email
@@ -20,8 +25,27 @@
         
         <input type="button" value="Cadastrar" id="butao" value="">
     </form>
+    <div id="users">
+        <?php 
+            $comando = $pdo->prepare("SELECT * FROM pessoas WHERE adm < 1212 and nome <> :nome");
+            $comando->bindParam(":nome", $_SESSION['user']);
+            $comando->execute(); 
+        
+            $resultado = $comando->execute();
+
+            while( $linhas = $comando->fetch()) 
+                {
+                    $id = $linhas['id_user'];
+                    $email = $linhas['nome'];
+                    $nome = $linhas['cargo'];
+                    $foto = $linhas['email'];
+                    $adm = $linhas['telefone'];
+                }
+        ?>
+        
+    </div>
 </body>
-<script src="../jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script>
     $("#butao").click(function() {
         var dados = $('#form').serialize();
@@ -29,12 +53,13 @@
 
         $.ajax({
 				type: "POST",
-                url: "inserir.php",
+                url: "../php/callfunc/inserir.php",
 				data: dados,
 				                
                 success: function(success)
 				{
-					
+					$("input").val("");
+                    console.log(success);
 				},
 				
 			});
