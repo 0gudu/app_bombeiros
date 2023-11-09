@@ -91,7 +91,7 @@
                     var questDiv = $("<div>").text("Pergunta: " + mergedArray[categoria][index][0]);//exibe o titulo da pergunta de acordo com a array mergedArray, que contem as perguntas
                     questionDiv.append(questDiv);
 
-                    valapular = 0;
+                
 
                     //ele traduz de json para obj js e pra cada obj ele faz o loop
                     $.each(JSON.parse(question), function(key, value) {
@@ -113,12 +113,10 @@
                         }
 
                             
-                        var valueDiv = $("<div>").text(mergedArray[categoria][index][num_perg + valapular] + ": " + val);
-                        if (valapular > 3) {
-                            questionDiv.append(tit, valueDiv);
-                        }else {
-                            questionDiv.append(valueDiv);
-                        }
+                        var valueDiv = $("<div>").text(mergedArray[categoria][index][num_perg] + ": " + val);
+                        
+                        questionDiv.append(valueDiv);
+                    
                         
 
                         //questionDiv.append(fieldDiv, valueDiv);
