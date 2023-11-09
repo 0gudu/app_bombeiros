@@ -57,9 +57,6 @@
         }
     }
 
-    
-
-    
     $("#voltar").on("click", function () {
         window.open("ocorrencia.php","_self");
     });

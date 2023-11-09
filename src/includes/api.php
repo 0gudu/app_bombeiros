@@ -446,19 +446,40 @@
                                                                                                                                                                                                         
         }
 
-
+        //funções nao ultilizadas no processo de exibição das perguntas pq sao feitas de maneira burra
+        /*
         public function juntarpergs() {
-            $dados1 = file_get_contents("../json/perguntas1.json");
-            $dados2 = file_get_contents("../json/perguntas2.json");
-            $dados3 = file_get_contents("../json/perguntas3.json");
-            $dados4 = file_get_contents("../json/perguntas4.json");
-            $dados5 = file_get_contents("../json/perguntas5.json");
-            $dados6 = file_get_contents("../json/perguntas6.json");
+            $dados1 = file_get_contents("../src/json/perguntas1.json");
+            $dados2 = file_get_contents("../src/json/perguntas2.json");
+            $dados3 = file_get_contents("../src/json/perguntas3.json");
+            $dados4 = file_get_contents("../src/json/perguntas4.json");
+            $dados5 = file_get_contents("../src/json/perguntas5.json");
+            $dados6 = file_get_contents("../src/json/perguntas6.json");
 
             $cat1 = [];
             $cat1[1] = json_decode($dados1);
-            echo $cat1;
+            $cc = json_encode($cat1);
+            return $cat1;
         }
+        
+        public function juntarpergs() {
+            $dados1 = file_get_contents("../src/json/perguntas1.json");
+            $dados2 = file_get_contents("../src/json/perguntas2.json");
+            $dados3 = file_get_contents("../src/json/perguntas3.json");
+            $dados4 = file_get_contents("../src/json/perguntas4.json");
+            $dados5 = file_get_contents("../src/json/perguntas5.json");
+            $dados6 = file_get_contents("../src/json/perguntas6.json");
+        
+            $cat1 = [];
+            $cat1[1] = json_decode($dados1);
+            $cc = json_encode($cat1);
+        
+            $jsCode = "var mergedArray = " . $cc . ";"; // Cria uma variável 'mergedArray' no JavaScript
+        
+            file_put_contents("merged.js", $jsCode); // Salva o código JavaScript em um arquivo .js
+            return $cat1;
+        }
+        */
     }
     
     $draw = new Desenhar();

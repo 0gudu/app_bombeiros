@@ -38,13 +38,8 @@
 </div>
 </body>
 <script src="../js/jquery.js"></script>
+<script src="../js/questsjson.js"></script>
 <script>
-    
-    //pega os json das perguntas
-    var jsonData;
-
-
-
 
     //visualizar as questoes ja respondidas
     function openanwsers(idquest) {
@@ -73,28 +68,74 @@
         
 
         //exibe as respostas certinho
-       function exibirModal(data) {
-            var $result = $(".modal-body"); // Seleciona a div com a classe modal-body
+        //NAO ATUALIZA QUANDO CLICA EM OUTRO
+        //ESTA COM A DATA ERRADA
+        //TEM QUE IMPLEMENTAR O ROLE DO SUBTITULO E TIRAR O PULAR LINHAR LINHA DO ROLE PA TLGD PARCA
+        function exibirModal(data) {
 
-                $.each(data, function(category, questions) {
-                    var categoryDiv = $("<div>").addClass("category").text("Categoria: " + category);
-                    $result.append(categoryDiv);
+            console.log(mergedArray);
+            var $result = $(".modal-body");
 
-                    $.each(questions, function(index, question) {
-                        var questionDiv = $("<div>").addClass("question"); // Cria uma div para cada conjunto de valores
+            //para cada categoria ele vai exibir a categoria
+            $.each(data, function(category, questions) {
+                var categoryDiv = $("<div>").addClass("category").text("Categoria: " + category);
+                $result.append(categoryDiv);
 
-                        $.each(JSON.parse(question), function(key, value) {
-                            var fieldDiv = $("<div>").text("Campo: " + value.name);
-                            var valueDiv = $("<div>").text("Valor: " + value.value);
-                            questionDiv.append(fieldDiv, valueDiv);
-                        });
+                //para cada questão ele vai exibir a questao
+                $.each(questions, function(index, question) {
+                    
+                    categoria = category - 1;
+                    console.log(categoria + " " + index + " " + 0);
 
-                        $result.append(questionDiv); // Adiciona a div com os valores à div com a classe modal-body
+                    var questionDiv = $("<div>").addClass("container m-3"); // Cria uma div para cada conjunto de valores
+                    var questDiv = $("<div>").text("Pergunta: " + mergedArray[categoria][index][0]);//exibe o titulo da pergunta de acordo com a array mergedArray, que contem as perguntas
+                    questionDiv.append(questDiv);
+
+                    valapular = 0;
+
+                    //ele traduz de json para obj js e pra cada obj ele faz o loop
+                    $.each(JSON.parse(question), function(key, value) {
+
+                        //var fieldDiv = $("<div>").text("Campo: " + value.name); //essa função exibia o id do input
+
+                        var perg_num = parseInt(value.name.replace("perg", "")); //ele tira a parte string do id dos input e deixa so o texto
+                        num_perg = perg_num + 3;//ele avança para a posição onde fala oq cada campo significa
+
+                        //pequeno filtro porco para o input checkbox, ele substitui pelos simbolos lindo
+                        if (value.value == "off"){
+                            val = "❌";
+                            console.log(value.value + " valor: off");
+                        }else if (value.value == "") {
+                            val = "✔️";
+                            console.log(value.value + " valor: vazio");
+                        }else{
+                            val = value.value;
+                        }
+
+                            
+                        var valueDiv = $("<div>").text(mergedArray[categoria][index][num_perg + valapular] + ": " + val);
+                        if (valapular > 3) {
+                            questionDiv.append(tit, valueDiv);
+                        }else {
+                            questionDiv.append(valueDiv);
+                        }
+                        
+
+                        //questionDiv.append(fieldDiv, valueDiv);
+                        console.log(num_perg);
                     });
+
+                    $result.append(questionDiv); // Adiciona a div com os valores à div com a classe modal-body
                 });
-       }
+            });
+
+    
+        }
+
+
+}
         
         
-    }
+    
 </script>
 </html>
