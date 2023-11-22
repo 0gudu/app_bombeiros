@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="assets/static/css/bootstrap.min.css">
+    
+</head>
+<body>
+    <nav class="navbar bg-dark ">
+        <a class="navbar-brand text-white m-2" href="#"><h5>nao tamo na terra tamo noar</h3> </a>
+    </nav>
+    <div class="container-fluid d-flex flex-column align-items-center justify-content-center vh-100 custom-container">
+        <div class="container-fluid row align-items-start">
+            <div class="container d-flex col-lg-5 align-items-center justify-content-center">
+                <h1 class="display-1">NOAR</h1>
+            </div>
+            <div class="container d-flex col-lg-5 align-items-center justify-content-center">
+                <form id="form" class="container col-lg-7 justify-content-start">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">Insira o nome provido pelo seu administrador</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="text" class="form-control" id="senha" name="senha">
+                    </div>
+                    <input type="button" class="btn btn-danger" value="Entrar" id="butao">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="assets/static/js/bootstrap.min.js"></script>
+<script src="src/js/jquery.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#butao").click(function() {
+            var dados = $('#form').serialize();
+            $.ajax({
+                type: "POST",   
+                url: "logar.php",
+                data: dados,
+                success: function(response) {
+                    console.log(response);
+                    if (response === "true") {
+                        window.open("src/php/menu.php","_self");
+                    } else {
+                        $("#nome").val("");
+                        $("#senha").val(""); 
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred: " + error);
+                }
+            });
+        });
+    });
+</script>
+</html>

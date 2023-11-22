@@ -1,5 +1,5 @@
 <?php 
-    require_once ''
+    require_once 'conect.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="../css/admusers.css">
 </head>
 <body>
-    <form action="" id="form">
+    <form action="inserir.php" method="POST">
         Nome
         <input type="text" id="nome" name="nome" value="">
-        Cargo
+        Cargo(usuario ou administrador)
         <input type="text" id="cargo" name="cargo" value="">
         Senha
         <input type="text" id="senha" name="senha" value="">
@@ -27,7 +27,7 @@
     </form>
     <div id="users">
         <?php 
-            $comando = $pdo->prepare("SELECT * FROM pessoas WHERE adm < 1212 and nome <> :nome");
+            $comando = $pdo->prepare("SELECT * FROM usuarios WHERE nome <> :nome");
             $comando->bindParam(":nome", $_SESSION['user']);
             $comando->execute(); 
         
@@ -47,23 +47,5 @@
 </body>
 <script src="../js/jquery.js"></script>
 <script>
-    $("#butao").click(function() {
-        var dados = $('#form').serialize();
-       
-
-        $.ajax({
-				type: "POST",
-                url: "../php/callfunc/inserir.php",
-				data: dados,
-				                
-                success: function(success)
-				{
-					$("input").val("");
-                    console.log(success);
-				},
-				
-			});
-			
-    });
 </script>
 </html>
