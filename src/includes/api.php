@@ -74,13 +74,27 @@
                 if ($ver == 0) {
                     echo "false";
                 }else {
-                    echo "true";
 
-                    $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+                    $stmt = $this->pdo->prepare("SELECT cargo FROM usuarios WHERE nome = :nome AND senha = :senha"); 
                     $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
                     $ver = $stmt->fetchColumn();
+                    if ($ver == "administrador"){
+                        $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+                        $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
+                        $ver = $stmt->fetchColumn();
+                        $_SESSION['user'] = $ver;
+                        echo("adm");
+                    }else{
+                        $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+                        $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
+                        $ver = $stmt->fetchColumn();
+                        $_SESSION['user'] = $ver;
+                        echo("user");
+                    }
 
-                    $_SESSION['user'] = $ver;
+                    
+
+                    
                 }
             } catch (Exception $e) {
                 echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -179,6 +193,20 @@
                     $stmt = $this->pdo->prepare("INSERT INTO answers (id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer) ON DUPLICATE KEY UPDATE answer = :answer");
                     $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]); 
                 }
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            }      
+            
+        }
+        public function svquestss($idquest, $cat, $quest, $anw) {   
+            try {
+                $userid = $_SESSION['user'];
+            
+                    $stmt = $this->pdo->prepare("DELETE FROM answers WHERE id_quests = :idquests AND cat = :cat AND quest = :quest"); 
+                    $stmt->execute([':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+                    $stmt = $this->pdo->prepare("INSERT INTO answers (id_user, id_quests, cat, quest, answer) VALUES (:userid, :idquests, :cat, :quest, :answer) ON DUPLICATE KEY UPDATE answer = :answer");
+                    $stmt->execute([':userid' => $userid, ':idquests' => $idquest, ':cat' => $cat, ':quest' => $quest, ':answer' => $anw]); 
+                
             } catch (Exception $e) {
                 echo 'Caught exception: ',  $e->getMessage(), "\n";
             }      
@@ -341,6 +369,88 @@
             
             
         }
+        public function exibirPerguntass($num, $pers) {
+            try {
+                $this->dados = file_get_contents($pers);
+                $this->perguntas = json_decode($this->dados, true);
+                $per = $num + 1;
+        
+                echo "Pergunta número $per <br><br>";
+                echo $this->perguntas[0][$num][0];
+        
+                if ($this->perguntas[0][$num][1] == "escreve") {
+                    $extra = 0;
+                    $input = 0;
+                    for ($desc = 0; $desc < ($this->perguntas[0][$num][2] + $extra); $desc++) {
+                        $caracs = $this->perguntas[0][$num][$desc + 3];
+                        $firstcarc = $caracs[0];
+                        $caracs = substr($caracs, 1);
+                        if ($firstcarc == "&") {
+                            echo "<p> $caracs </p>";
+                            $extra++;
+                            $input--;
+                        }elseif ($firstcarc == "%") {
+                            echo "<br>";
+                            $extra++;
+                            $input--;
+                        }elseif ($firstcarc == "$"){
+                            echo "<span> <input type='checkbox' name='perg".$input."' id='input$desc' value=''>
+                            <label for='input$desc'>" . $caracs . "</label></span>";
+                            $input++;
+                        }else
+                            echo "<input type='text' id='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' name='perg".$input."' placeholder='" . $this->perguntas[0][$num][$desc + 3] . "' value=''>";
+                            $input++;
+                            
+                        };
+                        
+                    
+                } elseif ($this->perguntas[0][$num][1] == "check") {
+                    $extra = 0;
+                    for ($desc = 0; $desc < ($this->perguntas[0][$num][2] + $extra); $desc++) {
+                        $caracs = $this->perguntas[0][$num][$desc + 3];
+                        $firstcarc = $caracs[0];
+                        $caracs = substr($caracs, 1);
+                        if ($firstcarc == "&") {
+                            
+                            echo "<p> $caracs </p>";
+                            $extra++;
+                        }else if ($firstcarc == "%") {
+                            echo "<br>";
+                            $extra++;
+                        }else {
+                    
+                        echo "<span> <input type='checkbox' name='perg".$desc."' id='input$desc' value=''>
+                        <label for='input$desc'>" . $this->perguntas[0][$num][$desc + 3] . "</label></span>";
+                        };
+                    }
+                } else {
+
+                    echo "erro na sintaxe, verifique novamente o documento $pers";
+                    //SELECT NAO ULTILIZADO
+                    /*echo "<select name='perg0' id='sim' value='a'>";
+                    
+                    for ($desc = 0; $desc < $this->perguntas[0][$num][2]; $desc++) {
+                        $optionValue = $this->perguntas[0][$num][$desc + 3];
+                        echo "<option value='$optionValue'>$optionValue</option>";
+                    };
+        
+                    echo "</select>";
+                    */
+                };
+        
+        
+        
+                $coisas = count($this->perguntas[0]) - 1;
+                
+                
+                    echo '<button type="button" id="proxima">SALVAR</button>';
+                
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            }
+            
+            
+        }
     
         //pega as respostas de acordo com a categoria e a questao enviada e a envia ao usuario em um formato de objeto json
         public function loadquests($userid, $cat, $quest) {
@@ -368,6 +478,24 @@
                 return $e->getMessage();
             }
         }
+        //pega as respostas de acordo com a categoria e a questao enviada e a envia ao usuario em um formato de objeto json
+        public function loadquestss($idquest, $cat, $quest) {
+            try {
+                
+                
+                
+                    $stmt = $this->pdo->prepare("SELECT answer FROM answers WHERE id_quests = :idquest AND cat = :cat AND quest = :quest");
+                    $stmt->execute([':idquest' => $idquest, ':cat' => $cat, ':quest' => $quest]);
+                    $ver = $stmt->fetchColumn();
+                
+                    $respostas = json_decode($ver);
+
+                    return $respostas;
+                
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
+        }
 
         //lista as ocorrencias enviadas de acordo com o usuario
         public function listocc($userid){
@@ -381,7 +509,7 @@
                     $idquestt = $linhas['id_quest'];
                     
                     
-                    echo "<div id='cart{$id}' class='cursor-pointer bg-danger p-4 border' onclick='openanwsers({$idquestt})' class='container'><h2>{$data}</h2></div>";
+                    echo "<div id='cart{$id}' class='cursor-pointer bg-danger p-4 border' onclick='openanwsers({$idquestt})' class='container'><h2>{$idquestt}</h2></div>";
  
                     
                     $id++;
@@ -416,6 +544,7 @@
             {
                 $cat = $linhas["cat"]; //nome da coluna
                 $answers = $linhas["answer"];
+                $perg = $linhas["quest"] + 1;
                 
                 switch ($cat) {
                     case 1:
@@ -487,6 +616,23 @@
             return $cat1;
         }
         */
+        public function exibirusers(){
+            $comando = $this->pdo->prepare("SELECT * FROM usuarios WHERE nome <> :nome");
+            $comando->bindParam(":nome", $_SESSION['user']);
+            $comando->execute(); 
+        
+            while ($linhas = $comando->fetch(PDO::FETCH_ASSOC)) {
+                $id = $linhas['id_user'];
+                $nome = $linhas['nome'];
+                $cargo = $linhas['cargo'];
+                $email = $linhas['email'];
+                $telefone = $linhas['telefone'];
+        
+                // Do something with the retrieved data, for example, print or store it
+                echo "ID: $id, Nome: $nome, Email: $email, Cargo: $cargo, Telefone: $telefone <form action='verocc.php' method='post'><input type='hidden' name='userid' value='$id'><input type='submit' value='Ver Ocorrências'></form><br>";
+            }
+        }
+        
     }
     
     $draw = new Desenhar();

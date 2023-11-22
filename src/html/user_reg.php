@@ -1,3 +1,6 @@
+<?php 
+    require_once "../includes/api.php";
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,6 +11,7 @@
     <link rel="stylesheet" href="../css/admusers.css">
 </head>
 <body>
+
     <form action="" id="form">
         Nome
         <input type="text" id="nome" name="nome" value="">
@@ -22,9 +26,20 @@
         
         <input type="button" value="Cadastrar" id="butao" value="">
     </form>
+    <form action="questseditar.php" method="POST">
+        insira o id do questionario
+        <input type="number" name="id">
+        insira a categoria do questionario
+        <input type="number" name="cat">
+        insira a questao do questionario
+        <input type="number" name="per">
+        <input type="submit">
+    </form>
     <div id="users">
-        
-        
+        USUARIOS:<br>
+        <?php
+            $draw->exibirusers();
+        ?>
     </div>
 </body>
 <script src="../js/jquery.js"></script>

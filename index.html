@@ -47,11 +47,16 @@
                 data: dados,
                 success: function(response) {
                     console.log(response);
-                    if (response === "true") {
-                        window.open("src/php/menu.php","_self");
-                    } else {
+                    if (response === "false") {
                         $("#nome").val("");
-                        $("#senha").val(""); 
+                        $("#senha").val("");
+                    } else {
+                        if (response == "adm"){
+                            window.open("src/html/user_reg.php","_self");
+                        }else {
+                            window.open("src/php/menu.php","_self");
+                        }
+                        
                     }
                 },
                 error: function(xhr, status, error) {
