@@ -217,7 +217,14 @@
                 echo 'Caught exception: ',  $e->getMessage(), "\n";
             }      
             
-        }        
+        }
+
+        function mudarnome($nome) {
+            $id = $_SESSION['user'];
+            $stmt = $this->pdo->prepare("UPDATE usuarios SET nome = :nome WHERE id_user = :idquest");
+            $stmt->execute([':nome' => $nome, ':idquest' => $id]);
+        }
+        
     }
     
     //class resposavel por escrever as coisas na tela em sua maioria

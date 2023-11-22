@@ -16,6 +16,14 @@
     <?php 
         include("../includes/header.php")
     ?>
-    body content
+    <div class="container">
+        <form action="callfunc/mudarnome.php" method="POST">
+            <h2>Insira seu novo nome:</h2>
+            <input type="text" name="nome" id="nome">
+            <input type="submit" value="mudar">
+        </form>
+    </div>
+    
+    
 </body>
 </html>
