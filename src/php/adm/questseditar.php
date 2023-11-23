@@ -1,7 +1,7 @@
 <?php 
-    require("../includes/api.php");
+    require("../../includes/api.php");
     $db->checklogin();
-    $per = $_POST["per"] -1;
+    $per = $_POST["per"];
     $cat = $_POST["cat"];
     $idquest = $_POST['id'];
     $answers = $draw->loadquestss($idquest, $cat, $per);
@@ -13,21 +13,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>"Todas"</title>
-    <link rel="stylesheet" href="../css/quests.css">
-    <link rel="stylesheet" href="../../assets/static/css/bootstrap.min.css">
-    <script src="../../assets/static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../css/quests.css">
+    <link rel="stylesheet" href="../../../assets/static/css/bootstrap.min.css">
+    <script src="../../../assets/static/js/bootstrap.min.js"></script>
 </head>
 <body>
 
     <form id="pergunta">
             <?php
-                $draw->exibirPerguntass($per,"../json/perguntas$cat.json");
+                $draw->exibirPerguntass($per,"../../json/perguntas$cat.json");
             ?>    
     </form>
     
     
 </body>
-<script src="../js/jquery.js"></script>
+<script src="../../js/jquery.js"></script>
 <script>
     var per_prox = <?php echo $per + 1; ?>;
     var per_ant = <?php echo $per - 1; ?>;
@@ -93,7 +93,7 @@
                 
             $.ajax({
                 type: "POST",
-                url: "../php/callfunc/svvquessst.php",
+                url: "../callfunc/svvquessst.php",
 
                 data: data,
                 success: function(response) {

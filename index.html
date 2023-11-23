@@ -15,18 +15,18 @@
     <div class="container-fluid d-flex flex-column align-items-center justify-content-center vh-100 custom-container">
         <div class="container-fluid row align-items-start">
             <div class="container d-flex col-lg-5 align-items-center justify-content-center">
-                <h1 class="display-1">NOAR</h1>
+                <h1 class="display-1">NOAR - SISTEMA DE OCORRENCIAS</h1>
             </div>
             <div class="container d-flex col-lg-5 align-items-center justify-content-center">
                 <form id="form" class="container col-lg-7 justify-content-start">
                     <div class="mb-3">
-                        <label for="nome" class="form-label">Nome</label>
+                        <label for="nome" class="form-label">ID</label>
                         <input type="text" class="form-control" id="nome" name="nome" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">Insira o nome provido pelo seu administrador</div>
+                        <div id="emailHelp" class="form-text">Insira o id provido pelo seu administrador</div>
                     </div>
                     <div class="mb-3">
                         <label for="senha" class="form-label">Senha</label>
-                        <input type="text" class="form-control" id="senha" name="senha">
+                        <input type="password" class="form-control" id="senha" name="senha">
                     </div>
                     <input type="button" class="btn btn-danger" value="Entrar" id="butao">
                 </form>
@@ -52,7 +52,7 @@
                         $("#senha").val("");
                     } else {
                         if (response == "adm"){
-                            window.open("src/html/user_reg.php","_self");
+                            window.open("src/php/adm/user_reg.php","_self");
                         }else {
                             window.open("src/php/menu.php","_self");
                         }

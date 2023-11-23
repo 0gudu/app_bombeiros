@@ -43,7 +43,55 @@
             }
             
         }
+        public function excluiracc($id) {
+            try {
+                $stmt = $this->pdo->prepare("DELETE FROM answers WHERE id_user = :id"); 
+                $stmt->execute([':id' => $id]);
+                $ver = $stmt->fetchColumn();
+                $stmt = $this->pdo->prepare("DELETE FROM quests WHERE user_quests = :id"); 
+                $stmt->execute([':id' => $id]);
+                $ver = $stmt->fetchColumn();
+                $stmt = $this->pdo->prepare("DELETE FROM usuarios WHERE id_user = :id"); 
+                $stmt->execute([':id' => $id]);
+                $ver = $stmt->fetchColumn();
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            }
+        }
+        public function mudarsenha($id, $senha) {
+            try {
+            $stmt = $this->pdo->prepare("UPDATE usuarios SET senha = :senha WHERE id_user = :id"); 
+            $stmt->execute([':senha' => $senha,':id' => $id]);
+            $ver = $stmt->fetchColumn();
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        }
 
+        public function modifyacc($id, $data, $tipo){
+            switch ($tipo) {
+                case 1:
+                    $stmt = $this->pdo->prepare("UPDATE usuarios SET nome = :datas WHERE id_user = :id"); 
+                    $stmt->execute([':datas' => $data, ':id' => $id]);
+                    $ver = $stmt->fetchColumn();
+                    break;
+                case 2:
+                    $stmt = $this->pdo->prepare("UPDATE usuarios SET cargo = :datas WHERE id_user = :id"); 
+                    $stmt->execute([':datas' => $data, ':id' => $id]);
+                    $ver = $stmt->fetchColumn();
+                    break;
+                case 3:
+                    $stmt = $this->pdo->prepare("UPDATE usuarios SET email = :datas WHERE id_user = :id"); 
+                    $stmt->execute([':datas' => $data, ':id' => $id]);
+                    $ver = $stmt->fetchColumn();
+                    break;
+                case 4:
+                    $stmt = $this->pdo->prepare("UPDATE usuarios SET telefone = :datas WHERE id_user = :id"); 
+                    $stmt->execute([':datas' => $data, ':id' => $id]);
+                    $ver = $stmt->fetchColumn();
+                    break;
+            }
+        }
         //função para checar se o usuario existe, dando as informações como nome e senha para verificação
         public function checkuser($nome, $senha) {
             try {
@@ -67,7 +115,7 @@
         //função responsavel por logar na conta
         public function login($nome, $senha ) {
             try {
-                $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+                $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE id_user = :nome AND senha = :senha"); 
                 $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
                 $ver = $stmt->fetchColumn();
 
@@ -75,25 +123,18 @@
                     echo "false";
                 }else {
 
-                    $stmt = $this->pdo->prepare("SELECT cargo FROM usuarios WHERE nome = :nome AND senha = :senha"); 
+                    $stmt = $this->pdo->prepare("SELECT cargo FROM usuarios WHERE id_user = :nome AND senha = :senha"); 
                     $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
                     $ver = $stmt->fetchColumn();
-                    if ($ver == "administrador"){
-                        $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
-                        $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
-                        $ver = $stmt->fetchColumn();
-                        $_SESSION['user'] = $ver;
+                    if ($ver == "Administrador"){
+                        $_SESSION['user'] = $nome;
                         echo("adm");
                     }else{
-                        $stmt = $this->pdo->prepare("SELECT id_user FROM usuarios WHERE nome = :nome AND senha = :senha"); 
-                        $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
-                        $ver = $stmt->fetchColumn();
-                        $_SESSION['user'] = $ver;
+                        $_SESSION['user'] = $nome;
                         echo("user");
                     }
 
-                    
-
+                
                     
                 }
             } catch (Exception $e) {
@@ -514,6 +555,9 @@
                     
                     $id++;
                 }
+                if ($id == 0) {
+                    echo("Este usuario nao tem ocorrencias");
+                }
             } catch (Exception $e) {
                 echo $e->getMessage();
             }    
@@ -532,20 +576,22 @@
         }
 
         public function listanswer($idquest) {
-            $stmt = $this->pdo->prepare("SELECT * FROM answers WHERE id_quests = :idquest ");
+            $stmt = $this->pdo->prepare("SELECT * FROM answers WHERE id_quests = :idquest ORDER BY quest ASC");
             $stmt->execute([':idquest' => $idquest]);
+        
+            // Arrays para armazenar respostas em categorias
             $cat1 = array();
             $cat2 = array();
             $cat3 = array();
             $cat4 = array();
             $cat5 = array();
             $cat6 = array();
-            while( $linhas = $stmt->fetch()) 
-            {
-                $cat = $linhas["cat"]; //nome da coluna
+        
+            while ($linhas = $stmt->fetch()) {
+                $cat = $linhas["cat"]; // nome da coluna
                 $answers = $linhas["answer"];
-                $perg = $linhas["quest"] + 1;
-                
+        
+                // Adiciona a resposta à categoria correspondente
                 switch ($cat) {
                     case 1:
                         array_push($cat1, $answers);
@@ -565,10 +611,11 @@
                     case 6:
                         array_push($cat6, $answers);
                         break;
-                    
                 }
-            };
-            $ans = array (
+            }
+        
+            // Agrupa as categorias em um array associativo
+            $ans = array(
                 '1' => $cat1,
                 '2' => $cat2,
                 '3' => $cat3,
@@ -576,11 +623,14 @@
                 '5' => $cat5,
                 '6' => $cat6
             );
+        
+            // Codifica o array associativo em JSON
             $jsonans = json_encode($ans);
-
+        
             return $jsonans;
-                                                                                                                                                                                                        
         }
+        
+        
 
         //funções nao ultilizadas no processo de exibição das perguntas pq sao feitas de maneira burra
         /*
@@ -617,20 +667,68 @@
         }
         */
         public function exibirusers(){
-            $comando = $this->pdo->prepare("SELECT * FROM usuarios WHERE nome <> :nome");
-            $comando->bindParam(":nome", $_SESSION['user']);
-            $comando->execute(); 
+            try {
+                $comando = $this->pdo->prepare("SELECT * FROM usuarios WHERE nome <> :nome");
+                $comando->bindParam(":nome", $_SESSION['user']);
+                $comando->execute(); 
+                $linhas = $comando->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+                <table class="table  table-striped table-bordered">
+                
+                <tr>
+                    <td><b>ID</b></td>
+                    <td><b>NOME</b></td>
+                    <td><b>CARGO</b></td>
+                    <td><b>EMAIL</b></td>
+                    <td><b>TELEFONE</b></td>
+                    <td><b>SENHA</b></td>
+                    <td><b>VER OCORRENCIAS</b></td>
+                    <td><b>EDITAR CONTA</b></td>
+                    <td><b>EXCLUIR CONTA</b></td>
+                </tr>
+                <?php
+            foreach ($linhas as $l) {?>
+                <tr>
+                    <td><?=$l['id_user']?></td>
+                    <td><?=$l['nome']?></td>
+                    <td><?=$l['cargo']?></td>
+                    <td><?=$l['email']?></td>
+                    <td><?=$l['telefone']?></td>
+                    <td>
+                        
+                        <input type='submit' value='MUDAR SENHA' onclick="mudarsenha(<?=$l['id_user']?>)">
+
+                    </td>
+                    <td>
+                        <form action='verocc.php' method='post'>
+                            <input type='hidden' name='userid' value='<?=$l['id_user']?>'>
+                            <input type='submit' value='Ver Ocorrências'>
+                        </form>
+                    </td>
+                    <td>
+                        <form action='editaracc.php' method='post'>
+                                <input type='hidden' name='userid' value='<?=$l['id_user']?>'>
+                                <input type='submit' value='Editar Conta' >
+                        </form>
+                            
+                        </form>
+                    </td>
+                    <td>
+                        <input type='submit' value='EXCLUIR CONTA' onclick="excluirconta(<?=$l['id_user']?>)">
+                    </td>
+                </tr>
+                <?php
+
         
-            while ($linhas = $comando->fetch(PDO::FETCH_ASSOC)) {
-                $id = $linhas['id_user'];
-                $nome = $linhas['nome'];
-                $cargo = $linhas['cargo'];
-                $email = $linhas['email'];
-                $telefone = $linhas['telefone'];
-        
-                // Do something with the retrieved data, for example, print or store it
-                echo "ID: $id, Nome: $nome, Email: $email, Cargo: $cargo, Telefone: $telefone <form action='verocc.php' method='post'><input type='hidden' name='userid' value='$id'><input type='submit' value='Ver Ocorrências'></form><br>";
-            }
+                //echo "ID: $id, Nome: $nome, Email: $email, Cargo: $cargo, Telefone: $telefone <form action='verocc.php' method='post'><input type='hidden' name='userid' value='$id'><input type='submit' value='Ver Ocorrências'></form><br>";
+            }?>
+            
+            </table>
+            <?php
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }    
+            
         }
         
     }
