@@ -1,6 +1,9 @@
 <?php 
     require_once("../../includes/api.php");
     $id = $_POST['userid'];
+    $db->checklogin();
+    $iid = $_SESSION['user'];
+    $db->checkloginadm($iid);
 ?>
 <!DOCTYPE html>
 <html lang="en">

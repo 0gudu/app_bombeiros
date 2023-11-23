@@ -67,7 +67,33 @@
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         }
+        public function search($searchTerm) {
+            $searchTerm = '%' . $_GET['term'] . '%';
 
+            $sql = "SELECT id_quests FROM answers WHERE answer LIKE :searchTerm";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (count($results) > 0) {
+                echo '<table border="1">
+                        <tr>
+                            <th>ID Quest</th>
+                        </tr>';
+                
+                        foreach ($results as $result) {
+                            echo '<tr><td>' . $result['id_quests'] . '<input type="button" value="Visualizar Ocorrência" onclick="openanswers(' . $result['id_quests'] . ')"></td></tr>';
+                        }
+                        
+
+                echo '</table>';
+            } else {
+                echo '<p>Nenhum resultado encontrado.</p>';
+            }
+        }
         public function modifyacc($id, $data, $tipo){
             switch ($tipo) {
                 case 1:
@@ -166,7 +192,21 @@
                 exit();
             }
         }
-        
+        public function checkloginadm($id) {
+            if (!isset($_SESSION['user'])) {
+                header("Location: ../../index.html");
+                exit();
+            }else {
+                $stmt = $this->pdo->prepare("SELECT cargo FROM usuarios WHERE id_user = :nome "); 
+                    $stmt->execute([':nome' => $id]);
+                    $ver = $stmt->fetchColumn();
+                    if ($ver == "Administrador"){
+                        echo("adm");
+                    }else{
+                        header('location: ../php/menu.php');
+                    }
+            }
+        }
         //sai da conta
         public function exitacc() {
             session_destroy();

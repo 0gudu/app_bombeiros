@@ -6,6 +6,9 @@
     $idquest = $_POST['id'];
     $answers = $draw->loadquestss($idquest, $cat, $per);
 	$ans = json_encode($answers);
+    $db->checklogin();
+    $iid = $_SESSION['user'];
+    $db->checkloginadm($iid);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -38,6 +38,10 @@
 <script src="../../js/jquery.js"></script>
 <script src="../../js/questsjson.js"></script>
 <script>
+    $('#overlayModal').on('hidden.bs.modal', function () {
+    location.reload();
+});
+
     function voltar(){
         window.open("user_reg.php","_self");
     }

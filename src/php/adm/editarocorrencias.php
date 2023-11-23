@@ -1,5 +1,8 @@
 <?php
     require_once("../../includes/api.php");
+    $db->checklogin();
+    $iid = $_SESSION['user'];
+    $db->checkloginadm($iid);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

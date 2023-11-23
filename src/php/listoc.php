@@ -41,6 +41,10 @@
 <script src="../js/questsjson.js"></script>
 <script>
 
+$('#overlayModal').on('hidden.bs.modal', function () {
+    location.reload();
+});
+
     //visualizar as questoes ja respondidas
     function openanwsers(idquest) {
         console.log(idquest);
