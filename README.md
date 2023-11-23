@@ -8,7 +8,7 @@ Este aplicativo foi desenvolvido para facilitar o processo de registro das açõ
 
 ## Funcionalidades
 
-- **Área de Administração**: Os administradores têm acesso a uma área exclusiva para gerenciar as respostas dos bombeiros. Eles podem visualizar, exportar e analisar os dados coletados de forma eficiente.
+- **Área de Administração**: Os administradores têm acesso a uma área exclusiva para gerenciar as respostas dos bombeiros. Eles podem visualizar, editar e analisar os dados coletados de forma eficiente.
 
 - **Usuários do Aplicativo**: Os bombeiros têm acesso a uma interface simples e intuitiva para responder às perguntas após cada ação. As respostas são registradas e armazenadas de forma segura.
 
