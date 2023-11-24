@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-6 mx-auto">
             <?php 
-                $draw->listocc($iduser);
+                $draw->listoccadm($iduser);
             ?>
         </div>
     </div>

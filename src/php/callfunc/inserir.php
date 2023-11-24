@@ -1,6 +1,6 @@
 <?php 
     include("../../includes/api.php");
-
+    
     // Retrieve form data
     $nome = $_POST['nome'];
     $cargo = $_POST['cargo'];

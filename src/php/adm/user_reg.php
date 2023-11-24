@@ -106,11 +106,11 @@
                             <div class="container">
                                 <div class="card bg-white">
                                 <div class="card-body p-5">
-                                    <form action="" class="mb-3 mt-md-4" id="form">
+                                    <form action="" class="mb-3 mt-md-4" id="form1">
                                     <h2 class="fw-bold mb-2 text-uppercase ">Insira os dados</h2>
                                     <div class="mb-3">
                                         <label for="email" class="form-label ">Nome</label>
-                                        <input type="text" class="form-control" id="nome" name="nome" value="">
+                                        <input type="text" id="huehue"class="form-control" id="nome" name="nome" value="">
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label ">Cargo</label>
@@ -121,15 +121,15 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label ">Senha</label>
-                                        <input type="text" class="form-control" id="senha" name="senha" value="">
+                                        <input type="text" class="form-control" id="huehue" name="senha" value="">
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label ">Email</label>
-                                        <input type="text" class="form-control" id="email" name="email">
+                                        <input type="text" class="form-control" id="huehue" name="email">
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label ">Telefone</label>
-                                        <input type="number" id="telefone" class="form-control" name="telefone" value="">
+                                        <input type="number" id="huehue" class="form-control" name="telefone" value="">
                                     </div>
                                     <div class="d-grid">
                                         <button class="btn btn-outline-dark" id="butao">Cadastrar</button>
@@ -178,15 +178,15 @@
     $("#butao").click(function() {
     var isFormValid = true;
 
-    $('input').each(function() {
+    $('#huehue').each(function() {
         if ($(this).val().trim() === '') {
             isFormValid = false;
         }
     });
 
     if (isFormValid) {
-        var dados = $('#form').serialize();
-
+        var dados = $('#form1').serialize();
+        console.log(dados);
         $.ajax({
             type: "POST",
             url: "../callfunc/inserir.php",

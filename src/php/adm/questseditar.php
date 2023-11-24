@@ -43,21 +43,23 @@
 
     //carregar respostas já digitadas anteriormente
     if (respostas_json !== '0') {
-        respostas = JSON.parse(respostas_json);
-        console.log("a");
+    respostas = JSON.parse(respostas_json);
+    console.log("a");
+    if (respostas && typeof respostas === 'object') {
         num = Object.keys(respostas).length;
         console.log(num);
-        for(var perg = 0; perg < num; perg++) {
-			console.log(respostas[perg]);
-			if (respostas[perg].value == '') {
-				console.log("deveria ter marcado");
-				$("#perg" + perg).prop("checked", true);
-			}else {
-				$("#perg" + perg).val(respostas[perg].value);
-			}
-           
+        for (var perg = 0; perg < num; perg++) {
+            console.log(respostas[perg]);
+            if (respostas[perg].value == '') {
+                console.log("deveria ter marcado");
+                $("#perg" + perg).prop("checked", true);
+            } else {
+                $("#perg" + perg).val(respostas[perg].value);
+            }
         }
     }
+}
+
 
     $("#proxima").on("click", function () {
         prox();

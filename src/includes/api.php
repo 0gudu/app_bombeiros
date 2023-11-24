@@ -148,7 +148,6 @@
                 if ($ver == 0) {
                     echo "false";
                 }else {
-
                     $stmt = $this->pdo->prepare("SELECT cargo FROM usuarios WHERE id_user = :nome AND senha = :senha"); 
                     $stmt->execute([':nome' => $nome, ':senha' => md5($senha)]);
                     $ver = $stmt->fetchColumn();
@@ -201,7 +200,6 @@
                     $stmt->execute([':nome' => $id]);
                     $ver = $stmt->fetchColumn();
                     if ($ver == "Administrador"){
-                        echo("adm");
                     }else{
                         header('location: ../php/menu.php');
                     }
@@ -333,6 +331,29 @@
             $stmt = $this->pdo->prepare("UPDATE usuarios SET nome = :nome WHERE id_user = :idquest");
             $stmt->execute([':nome' => $nome, ':idquest' => $id]);
         }
+
+        function deleteocc($id) {
+            try {
+                $this->pdo->beginTransaction();
+        
+                // Delete records from 'answers' table
+                $stmt = $this->pdo->prepare("DELETE FROM answers WHERE id_quests = :nome");
+                $stmt->execute([':nome' => $id]);
+        
+                // Delete record from 'quests' table
+                $stmt = $this->pdo->prepare("DELETE FROM quests WHERE id_quest = :nome");
+                $stmt->execute([':nome' => $id]);
+        
+                $this->pdo->commit();
+            } catch (Exception $e) {
+                // An error occurred, rollback the transaction
+                $this->pdo->rollBack();
+        
+                // Throw the exception for centralized error handling
+                throw new Exception('Error deleting records: ' . $e->getMessage());
+            }
+        }
+        
         
     }
     
@@ -591,6 +612,29 @@
                     
                     
                     echo "<div id='cart{$id}' class='cursor-pointer bg-danger p-4 border' onclick='openanwsers({$idquestt})' class='container'><h2>{$idquestt}</h2></div>";
+ 
+                    
+                    $id++;
+                }
+                if ($id == 0) {
+                    echo("Este usuario nao tem ocorrencias");
+                }
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }    
+        }
+        public function listoccadm($userid){
+            try {
+                $stmt = $this->pdo->prepare("SELECT * FROM quests WHERE user_quests = :user AND ong_cat = 7");
+                $stmt->execute([':user' => $userid]);
+                
+                $id = 0;
+                while ($linhas = $stmt->fetch()) {
+                    $data = $linhas["date_quest"]; 
+                    $idquestt = $linhas['id_quest'];
+                    
+                    
+                    echo "<div id='cart{$id}' class='cursor-pointer bg-danger p-4 border' onclick='openanwsers({$idquestt})' class='container'><h2>{$idquestt}</h2><form action='callfunc/exc.php' method='POST'><input type='hidden' name='id' value='$idquestt'><input type='submit' value='EXCLUIR OCORRENCIA'></form></div>";
  
                     
                     $id++;
