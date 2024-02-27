@@ -5,6 +5,8 @@
 ## Visão Geral
 
 Este aplicativo foi desenvolvido para facilitar o processo de registro das ações realizadas pelos bombeiros do NOAR. Após cada ação, os bombeiros podem responder um questionário de controle de danos para avaliar o estado da equipe envolvida na ocorrência. O aplicativo oferece uma maneira mais prática de coletar e gerenciar essas informações, substituindo o uso de folhas de papel.
+![image](https://github.com/0gudu/app_bombeiros/assets/89671108/8e73d11d-c3fc-4a86-8f10-7890a19d65d3)
+
 
 ## Funcionalidades
 
